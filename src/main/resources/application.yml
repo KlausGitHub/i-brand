@@ -6,6 +6,15 @@ logging:
   path: /Users/Hero/logs/i-brand
   level.root: info
 
+mail:
+  account: "873959792@qq.com"
+  password: "sasmxavrbdgtbgab"
+  smtp:
+    host: smtp.qq.com
+    port: 25
+    auth: true
+
+
 spring:
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"

@@ -89,4 +89,8 @@ public class CustomerDO {
      * @mbggenerated
      */
     private Date lastLoginTime;
+    /**
+     * 激活码
+     */
+    private String activationCode;
 }

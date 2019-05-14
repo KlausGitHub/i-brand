@@ -7,7 +7,6 @@ import java.io.Serializable;
 public class BaseResult<T> implements Serializable {
 
     private static final long serialVersionUID = -7563364081718387169L;
-    public static final String SUCCESS_CODE = "0";
 
     private String code;
     private String message;
@@ -42,6 +41,7 @@ public class BaseResult<T> implements Serializable {
 
     public void setCodeSuccess() {
         this.code = "0";
+        this.message = "success";
     }
 
     public boolean success() {
