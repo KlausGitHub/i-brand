@@ -3,7 +3,7 @@ server:
 
 
 logging:
-  path: /Users/Hero/logs/i-brand
+  path: D:/log/iBrand
   level.root: info
 
 mail:
@@ -18,9 +18,9 @@ mail:
 spring:
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+    url: jdbc:mysql://127.0.0.1:3306/ibrand?useUnicode=true&amp;characterEncoding=utf8&useSSL=false&serverTimezone=GMT
     username: root
-    password: root
+    password:
     driver-class-name: "com.mysql.jdbc.Driver"
     # 初始化大小，最小，最大
     initialSize: 5
