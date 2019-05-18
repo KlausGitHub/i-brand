@@ -1,18 +1,22 @@
 package com.zhongshang.web;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Preconditions;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
+import com.zhongshang.dto.CustomerDTO;
 import com.zhongshang.request.LoginRequest;
 import com.zhongshang.request.RegisterRequest;
+import com.zhongshang.request.UpdateRequest;
 import com.zhongshang.response.LoginResponse;
 import com.zhongshang.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -85,10 +89,31 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 完善信息
+     *
+     * @param req
+     * @return
+     */
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public String get(Long id) {
-        return customerService.get(id).getEmail();
+    public BaseResult<Boolean> update(@RequestBody UpdateRequest req) {
+        try {
+            log.info("设置用户信息请求开始, 请求参数={}", JSON.toJSONString(req));
+            CustomerDTO cDto = customerService.get(req.getCustomerId());
+            if (cDto == null) {
+                log.error("未查询到该用户信息，请求用户id={}", req.getCustomerId());
+                return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, Boolean.FALSE, "未查询到该用户");
+            }
+            cDto.setLoginName(req.getLoginName());
+            cDto.setMobile(req.getMobile());
+            cDto.setHeadLogo(req.getHeadLogo());
+            return ResultUtils.success(customerService.update(cDto) > 0);
+        } catch (Exception e) {
+            log.error("update customer error, caused by = {}", e);
+            return ResultUtils.fail(ErrorCode.UPDATE_CUSTOMER_ERROR, Boolean.FALSE);
+        }
     }
+
 
     private String checkParam(LoginRequest req) {
         if (StringUtils.isEmpty(req.getLoginName())) {

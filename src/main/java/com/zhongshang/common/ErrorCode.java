@@ -45,6 +45,7 @@ public enum ErrorCode {
     REGISTER_ACTIVATE_ERROR("30004", "激活失败,{0}"),
     LOGIN_NAME_OR_PWD_ERROR("30005", "用户名或密码错误"),
     LOGIN_SYS_ERROR("30006", "登录失败"),
+    UPDATE_CUSTOMER_ERROR("30007", "更新失败"),
     ;
 
     private String code;
