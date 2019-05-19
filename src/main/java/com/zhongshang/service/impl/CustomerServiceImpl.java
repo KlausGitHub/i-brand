@@ -14,6 +14,7 @@ import com.zhongshang.service.EmailService;
 import com.zhongshang.service.ICustomerService;
 import com.zhongshang.utils.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -21,8 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -34,6 +38,8 @@ public class CustomerServiceImpl implements ICustomerService {
     private ThreadPoolTaskExecutor taskExecutor;
     @Resource
     private EmailService emailService;
+    @Resource
+    private HttpServletRequest request;
 
     @Override
     public Long create(CustomerDTO dto) {
@@ -96,7 +102,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public CustomerDTO getByLoginName(LoginRequest request) {
-        Preconditions.checkArgument(request != null, "id必须大于0");
+        Preconditions.checkArgument(request != null, "参数不能为空");
         CustomerDO model = dao.selectByLoginName(request);
         CustomerDTO result = new CustomerDTO();
         BeanUtils.copyProperties(model, result);
@@ -136,34 +142,35 @@ public class CustomerServiceImpl implements ICustomerService {
 
 
     @Override
-    public BaseResult<LoginResponse> login(LoginRequest request) {
-        LoginResponse response = new LoginResponse();
-        log.info("用户登录请求开始,请求参数={}", JSON.toJSONString(request));
-        String loginName = request.getLoginName();
-        String password = request.getPassword();
+    public BaseResult<LoginResponse> login(LoginRequest loginRequest) {
+        LoginResponse loginResponse = new LoginResponse();
+        log.info("用户登录请求开始,请求参数={}", JSON.toJSONString(loginRequest));
+        String loginName = loginRequest.getLoginName();
+        String password = loginRequest.getPassword();
         String md5Pwd = DigestUtils.md5DigestAsHex((password + BrandConstant.PWD_KEY).getBytes());
-        request.setPassword(md5Pwd);
+        loginRequest.setPassword(md5Pwd);
         if (RegexUtils.phoneRegex(loginName)) {
             //手机号码登录
-            request.setLoginType(BrandConstant.PHONE_TYPE);
+            loginRequest.setLoginType(BrandConstant.PHONE_TYPE);
         } else if (RegexUtils.emailRegex(loginName)) {
             //邮箱登录
-            request.setLoginType(BrandConstant.EMAIL_TYPE);
+            loginRequest.setLoginType(BrandConstant.EMAIL_TYPE);
         } else {
             //用户名登录
-            request.setLoginType(BrandConstant.LOGIN_NAME_TYPE);
+            loginRequest.setLoginType(BrandConstant.LOGIN_NAME_TYPE);
         }
-        CustomerDTO dbCustomer = getByLoginName(request);
+        CustomerDTO dbCustomer = getByLoginName(loginRequest);
         if (dbCustomer == null) {
-            log.error("未查询到该用户，登录用户信息={}", JSON.toJSONString(request));
-            return ResultUtils.fail(ErrorCode.LOGIN_NAME_OR_PWD_ERROR, response);
+            log.error("未查询到该用户，登录用户信息={}", JSON.toJSONString(loginRequest));
+            return ResultUtils.fail(ErrorCode.LOGIN_NAME_OR_PWD_ERROR, loginResponse);
         }
         //更新最后登录时间
         dbCustomer.setLastLoginTime(DateTime.now().toDate());
         update(dbCustomer);
-        response.setCustomerId(dbCustomer.getId());
-        response.setMobile(dbCustomer.getMobile());
-        return ResultUtils.success(response);
+        request.getSession().setAttribute("customer", dbCustomer);
+        loginResponse.setCustomerId(dbCustomer.getId());
+        loginResponse.setMobile(dbCustomer.getMobile());
+        return ResultUtils.success(loginResponse);
     }
 
     private void sendRegisterEmail(String email, String code) {

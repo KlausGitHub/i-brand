@@ -21,7 +21,7 @@ public enum ErrorCode {
     COMMON_ILLEGAL_ARG_ERR("20001", "参数不合法，{0}"),
     COMMON_ILLEGAL_OPERATION_ERR("20002", "非法操作，{0}."),
     COMMON_REPOSITORY_ERR("20003", "持久层操作异常，{0}"),
-    COMMON_NOT_LOGIN("20004", "用户未登录，{0}"),
+    COMMON_NOT_LOGIN("20004", "用户未登录"),
     COMMON_HSF_CONNECTION_ERR("20005", "HSF调用异常，{0}"),
     COMMON_BATCH_SUBMISSION_ERR("20006", "Batch提交异常，{0}"),
     COMMON_BATCH_EXEC_ERR("20007", "Batch执行异常，{0}"),
@@ -37,6 +37,7 @@ public enum ErrorCode {
     COMMON_REQUEST_INVALID("20018", "请求无效：{0}"),
     COMMON_LOCK_GET_FAIL("20019", "无法获取锁"),
     COMMON_VERIFY_SING_FAIL("20020", "验签失败"),
+    COMMON_UPLOAD_ERR("20021", "文件上传失败"),
 
     //注册
     REGISTER_ERROR("30001", "注册失败"),

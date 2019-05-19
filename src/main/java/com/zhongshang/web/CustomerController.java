@@ -6,6 +6,7 @@ import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
 import com.zhongshang.dto.CustomerDTO;
+import com.zhongshang.request.ChangePwdRequest;
 import com.zhongshang.request.LoginRequest;
 import com.zhongshang.request.RegisterRequest;
 import com.zhongshang.request.UpdateRequest;
@@ -112,6 +113,12 @@ public class CustomerController {
             log.error("update customer error, caused by = {}", e);
             return ResultUtils.fail(ErrorCode.UPDATE_CUSTOMER_ERROR, Boolean.FALSE);
         }
+    }
+
+    @RequestMapping(value = "changePwd", method = RequestMethod.POST)
+    public BaseResult<Boolean> changePwd(@RequestBody ChangePwdRequest req) {
+
+        return null;
     }
 
 
