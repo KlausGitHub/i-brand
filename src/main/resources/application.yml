@@ -46,4 +46,4 @@ spring:
 #    connectionProperties: druid.stat.mergeSql: true;
     druid.stat.slowSqlMillis: 5000
 
-uploadPath: D:\testDir\upload\image
+uploadPath: D:\testDir\upload\image\
