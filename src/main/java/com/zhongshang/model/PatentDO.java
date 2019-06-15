@@ -37,6 +37,13 @@ public class PatentDO {
     private BigDecimal servicePrice;
 
     /**
+     * 头图
+     *
+     * @mbggenerated
+     */
+    private String bannerUrl;
+
+    /**
      * 申请号
      *
      * @mbggenerated
