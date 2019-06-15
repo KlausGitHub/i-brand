@@ -2,7 +2,6 @@ package com.zhongshang.dao;
 
 
 import com.zhongshang.model.BrandDO;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
@@ -10,9 +9,9 @@ public interface BrandDAO {
 
     int deleteByPrimaryKey(Long id);
 
-    Long insert(BrandDO record);
+    int insert(BrandDO record);
 
-    Long insertSelective(BrandDO record);
+    int insertSelective(BrandDO record);
 
     BrandDO selectByPrimaryKey(Long id);
 

@@ -1,16 +1,15 @@
 package com.zhongshang.dao;
 
 import com.zhongshang.model.ServiceDO;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
 public interface ServiceDAO {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(ServiceDO record);
+    int insert(ServiceDO record);
 
-    Long insertSelective(ServiceDO record);
+    int insertSelective(ServiceDO record);
 
     ServiceDO selectByPrimaryKey(Long id);
 

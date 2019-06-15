@@ -2,16 +2,15 @@ package com.zhongshang.dao;
 
 
 import com.zhongshang.model.ConfigDO;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
 public interface ConfigDAO {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(ConfigDO record);
+    int insert(ConfigDO record);
 
-    Long insertSelective(ConfigDO record);
+    int insertSelective(ConfigDO record);
 
     ConfigDO selectByPrimaryKey(Long id);
 

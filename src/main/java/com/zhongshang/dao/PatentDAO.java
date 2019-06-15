@@ -2,16 +2,15 @@ package com.zhongshang.dao;
 
 
 import com.zhongshang.model.PatentDO;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
 public interface PatentDAO {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(PatentDO record);
+    int insert(PatentDO record);
 
-    Long insertSelective(PatentDO record);
+    int insertSelective(PatentDO record);
 
     PatentDO selectByPrimaryKey(Long id);
 

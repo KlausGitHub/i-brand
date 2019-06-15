@@ -2,16 +2,15 @@ package com.zhongshang.dao;
 
 
 import com.zhongshang.model.ApplyDO;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
 public interface ApplyDAO {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(ApplyDO record);
+    int insert(ApplyDO record);
 
-    Long insertSelective(ApplyDO record);
+    int insertSelective(ApplyDO record);
 
     ApplyDO selectByPrimaryKey(Long id);
 

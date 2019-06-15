@@ -3,16 +3,15 @@ package com.zhongshang.dao;
 
 import com.zhongshang.model.CustomerDO;
 import com.zhongshang.request.LoginRequest;
-import org.apache.ibatis.annotations.Options;
 
 import java.util.List;
 
 public interface CustomerDAO {
     int deleteByPrimaryKey(Long id);
 
-    Long insert(CustomerDO record);
+    int insert(CustomerDO record);
 
-    Long insertSelective(CustomerDO record);
+    int insertSelective(CustomerDO record);
 
     CustomerDO selectByPrimaryKey(Long id);
 

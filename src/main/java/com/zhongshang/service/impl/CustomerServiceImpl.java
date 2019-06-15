@@ -118,7 +118,7 @@ public class CustomerServiceImpl implements ICustomerService {
         }
         String code = UUID.randomUUID().toString();
         CustomerDO model = buildCustomerDO(req, code);
-        Long id = dao.insert(model);
+        dao.insert(model);
         //起个线程去发邮件
         sendRegisterEmail(email, code);
         return ResultUtils.success(model.getId() > 0);
