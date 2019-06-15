@@ -8,7 +8,7 @@ logging:
 
 mail:
   account: "873959792@qq.com"
-  password: "sasmxavrbdgtbgab"
+  password: "rwwwbtlnfmrybebh"
   smtp:
     host: smtp.qq.com
     port: 25
@@ -16,9 +16,11 @@ mail:
 
 
 spring:
+  cors:
+    allowedOrigin: all
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF8
     username: root
     password: root
     driver-class-name: "com.mysql.jdbc.Driver"
