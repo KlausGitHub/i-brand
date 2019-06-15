@@ -14,7 +14,6 @@ import com.zhongshang.service.EmailService;
 import com.zhongshang.service.ICustomerService;
 import com.zhongshang.utils.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -23,10 +22,8 @@ import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
