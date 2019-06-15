@@ -31,11 +31,11 @@ public class ServiceController {
     private IServiceService serviceService;
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public BaseResult<ServiceDTO> create(@RequestBody JSONObject paramJson){
+    public BaseResult<ServiceDTO> create(@RequestBody JSONObject paramJson) {
         try {
             log.info("创建服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
-            BeanUtils.copyProperties(serviceDTO,paramJson);
+            BeanUtils.copyProperties(serviceDTO, paramJson);
             serviceDTO.setCreateTime(new Date());
             serviceDTO.setModifyTime(new Date());
 
@@ -49,18 +49,18 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
-    public BaseResult<ServiceDTO> update(@RequestBody JSONObject paramJson){
+    public BaseResult<ServiceDTO> update(@RequestBody JSONObject paramJson) {
         try {
             log.info("修改服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
-            BeanUtils.copyProperties(serviceDTO,paramJson);
+            BeanUtils.copyProperties(serviceDTO, paramJson);
             //CustomerDTO customerDTO = customerService.get(serviceDTO.getCustomerId());
             serviceDTO.setModifyTime(new Date());
             int updateNum = serviceService.update(serviceDTO);
-            if(updateNum == 1){
+            if (updateNum == 1) {
                 return ResultUtils.success(serviceDTO);
-            }else{
-                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR,null,"未找到数据");
+            } else {
+                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR, null, "未找到数据");
             }
 
         } catch (Exception e) {
@@ -70,45 +70,45 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.POST)
-    public BaseResult<Boolean> delete(@RequestBody JSONObject paramJson){
-        try{
+    public BaseResult<Boolean> delete(@RequestBody JSONObject paramJson) {
+        try {
             log.info("删除服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
-            BeanUtils.copyProperties(serviceDTO,paramJson);
+            BeanUtils.copyProperties(serviceDTO, paramJson);
             int deleteNum = serviceService.delete(serviceDTO.getId());
-            if(deleteNum > 0){
+            if (deleteNum > 0) {
                 return ResultUtils.success(true);
-            }else{
-                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR,null,"未找到数据");
+            } else {
+                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR, null, "未找到数据");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error("delete error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_DELETE_ERR, false);
         }
     }
 
     @RequestMapping(value = "getById", method = RequestMethod.GET)
-    public BaseResult<ServiceDTO> getById(HttpServletRequest req){
-        try{
+    public BaseResult<ServiceDTO> getById(HttpServletRequest req) {
+        try {
             log.info("根据ID查询服务请求开始，参数={}", req.getParameter("id"));
             ServiceDTO serviceDTO = serviceService.get(Long.parseLong(req.getParameter("id")));
             return ResultUtils.success(serviceDTO);
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error("getById brand error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
         }
     }
 
     @RequestMapping(value = "getList", method = RequestMethod.POST)
-    public BaseResult<List<ServiceDTO>> getList(@RequestBody JSONObject paramJson){
-        try{
+    public BaseResult<List<ServiceDTO>> getList(@RequestBody JSONObject paramJson) {
+        try {
             log.info("批量查询服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
-            BeanUtils.copyProperties(serviceDTO,paramJson);
+            BeanUtils.copyProperties(serviceDTO, paramJson);
             List<ServiceDTO> list = serviceService.list(serviceDTO);
 
             return ResultUtils.success(list);
-        }catch(Exception e){
+        } catch (Exception e) {
             log.error("getList error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
         }

@@ -23,7 +23,8 @@ public class BrandServiceImpl implements IBrandService {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         BrandDO model = new BrandDO();
         BeanUtils.copyProperties(dto, model);
-        return dao.insert(model);
+        dao.insert(model);
+        return model.getId();
     }
 
     @Override

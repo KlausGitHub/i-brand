@@ -22,8 +22,8 @@ public class ServiceServiceImpl implements IServiceService {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         ServiceDO dataobject = new ServiceDO();
         BeanUtils.copyProperties(dto, dataobject);
-        Long id = dao.insert(dataobject);
-        return id;
+        dao.insert(dataobject);
+        return dataobject.getId();
     }
 
     @Override

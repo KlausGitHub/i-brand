@@ -9,10 +9,8 @@ import java.util.List;
 public interface ConfigDAO {
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(ConfigDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(ConfigDO record);
 
     ConfigDO selectByPrimaryKey(Long id);

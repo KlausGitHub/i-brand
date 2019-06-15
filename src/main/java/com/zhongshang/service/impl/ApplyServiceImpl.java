@@ -23,7 +23,8 @@ public class ApplyServiceImpl implements IApplyService {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         ApplyDO dataobject = new ApplyDO();
         BeanUtils.copyProperties(dto, dataobject);
-        return dao.insert(dataobject);
+        dao.insert(dataobject);
+        return dataobject.getId();
 
     }
 

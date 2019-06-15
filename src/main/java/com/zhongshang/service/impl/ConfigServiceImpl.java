@@ -24,8 +24,8 @@ public class ConfigServiceImpl implements IConfigService {
         ConfigDO dataobject = new ConfigDO();
         dataobject.setIsDeleted("N");
         BeanUtils.copyProperties(dto, dataobject);
-        Long id = dao.insert(dataobject);
-        return id;
+        dao.insert(dataobject);
+        return dataobject.getId();
     }
 
     @Override

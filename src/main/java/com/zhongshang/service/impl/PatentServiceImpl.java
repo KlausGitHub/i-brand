@@ -22,7 +22,8 @@ public class PatentServiceImpl implements IPatentService {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         PatentDO model = new PatentDO();
         BeanUtils.copyProperties(dto, model);
-        return dao.insert(model);
+        dao.insert(model);
+        return model.getId();
     }
 
     @Override

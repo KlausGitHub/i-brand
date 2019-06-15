@@ -6,7 +6,6 @@ import com.github.pagehelper.PageHelper;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
-import com.zhongshang.dto.CustomerDTO;
 import com.zhongshang.dto.PatentDTO;
 import com.zhongshang.service.ICustomerService;
 import com.zhongshang.service.IPatentService;

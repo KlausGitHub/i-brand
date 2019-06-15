@@ -43,7 +43,8 @@ public class CustomerServiceImpl implements ICustomerService {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         CustomerDO model = new CustomerDO();
         BeanUtils.copyProperties(dto, model);
-        return dao.insert(model);
+        dao.insert(model);
+        return model.getId();
     }
 
     @Override
@@ -117,7 +118,7 @@ public class CustomerServiceImpl implements ICustomerService {
         }
         String code = UUID.randomUUID().toString();
         CustomerDO model = buildCustomerDO(req, code);
-        dao.insert(model);
+        Long id = dao.insert(model);
         //起个线程去发邮件
         sendRegisterEmail(email, code);
         return ResultUtils.success(model.getId() > 0);

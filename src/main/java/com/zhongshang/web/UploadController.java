@@ -33,15 +33,15 @@ public class UploadController {
             return ResultUtils.fail(ErrorCode.COMMON_NOT_EMPTY_ERR, "上传图片失败，文件信息");
         }
         String fileName = file.getOriginalFilename();
-        if(!fileName.substring(fileName.lastIndexOf(".")).equals(".jpg") && !fileName.substring(fileName.lastIndexOf(".")).equals(".png")){
+        if (!fileName.substring(fileName.lastIndexOf(".")).equals(".jpg") && !fileName.substring(fileName.lastIndexOf(".")).equals(".png")) {
             return ResultUtils.fail(ErrorCode.COMMON_NOT_EMPTY_ERR, "上传图片失败，只支持jpg、png格式");
         }
         File imageFile = new File(uploadPath);
-        if(!imageFile.exists()){
+        if (!imageFile.exists()) {
             imageFile.mkdirs();
         }
-        imageFile = new File( uploadPath + System.currentTimeMillis() + fileName.substring(fileName.lastIndexOf(".")));
-        if(imageFile.exists()){
+        imageFile = new File(uploadPath + System.currentTimeMillis() + fileName.substring(fileName.lastIndexOf(".")));
+        if (imageFile.exists()) {
             return ResultUtils.fail(ErrorCode.COMMON_UPLOAD_ERR, "该文件已存在，请重试！");
         }
         try {

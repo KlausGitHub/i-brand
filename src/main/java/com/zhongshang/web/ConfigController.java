@@ -41,8 +41,8 @@ public class ConfigController {
             configDTO.setModifyTime(new Date());
             //CustomerDTO customerDTO = customerService.get(configDTO.getCustomerId());
 
-            long patnetId = configService.create(configDTO);
-            configDTO.setId(patnetId);
+            long configId = configService.create(configDTO);
+            configDTO.setId(configId);
             return ResultUtils.success(configDTO);
         } catch (Exception e) {
             log.error("create error, caused by ={}", e);

@@ -8,10 +8,8 @@ import java.util.List;
 public interface ServiceDAO {
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(ServiceDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(ServiceDO record);
 
     ServiceDO selectByPrimaryKey(Long id);

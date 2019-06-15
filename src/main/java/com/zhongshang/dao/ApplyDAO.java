@@ -9,10 +9,8 @@ import java.util.List;
 public interface ApplyDAO {
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(ApplyDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(ApplyDO record);
 
     ApplyDO selectByPrimaryKey(Long id);

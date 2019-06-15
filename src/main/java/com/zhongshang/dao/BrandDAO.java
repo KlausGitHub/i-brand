@@ -10,10 +10,8 @@ public interface BrandDAO {
 
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(BrandDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(BrandDO record);
 
     BrandDO selectByPrimaryKey(Long id);

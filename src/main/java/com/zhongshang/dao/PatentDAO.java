@@ -9,10 +9,8 @@ import java.util.List;
 public interface PatentDAO {
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(PatentDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(PatentDO record);
 
     PatentDO selectByPrimaryKey(Long id);

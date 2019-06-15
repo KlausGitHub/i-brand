@@ -10,10 +10,8 @@ import java.util.List;
 public interface CustomerDAO {
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insert(CustomerDO record);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
     Long insertSelective(CustomerDO record);
 
     CustomerDO selectByPrimaryKey(Long id);
