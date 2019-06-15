@@ -29,12 +29,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        CustomerDTO customer = (CustomerDTO) request.getSession().getAttribute("customer");
-        if (customer == null) {
-            response.setContentType("application/json;charset=UTF-8");
-            response.getOutputStream().write(NOT_LOGIN_JSON.getBytes("UTF8"));
-            return false;
-        }
+//        CustomerDTO customer = (CustomerDTO) request.getSession().getAttribute("customer");
+//        if (customer == null) {
+//            response.setContentType("application/json;charset=UTF-8");
+//            response.getOutputStream().write(NOT_LOGIN_JSON.getBytes("UTF8"));
+//            return false;
+//        }
         return true;
     }
 

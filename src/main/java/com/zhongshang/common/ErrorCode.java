@@ -47,6 +47,9 @@ public enum ErrorCode {
     LOGIN_NAME_OR_PWD_ERROR("30005", "用户名或密码错误"),
     LOGIN_SYS_ERROR("30006", "登录失败"),
     UPDATE_CUSTOMER_ERROR("30007", "更新失败"),
+
+    APPLY_ERROR("50001","服务申请失败"),
+    APPLY_NOT_EXIST("50002","服务申请不存在"),
     ;
 
     private String code;
