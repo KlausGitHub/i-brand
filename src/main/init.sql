@@ -101,4 +101,17 @@ create table t_service(
 	content text COMMENT '内容',
 	create_time datetime DEFAULT NULL COMMENT '创建时间',
   modify_time datetime DEFAULT NULL COMMENT '修改时间'
-) COMMENT '专利表';
+) COMMENT '服务表';
+
+
+CREATE TABLE `t_config` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`key` varchar(128)  DEFAULT '' COMMENT 'key',
+`value` text  DEFAULT NULL COMMENT 'value',
+`create_time` datetime DEFAULT NULL COMMENT '创建时间',
+`modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+`is_deleted` char(1)  DEFAULT '' COMMENT '逻辑删除标记Y是N否',
+`creator` varchar(64)  DEFAULT NULL COMMENT '创建人',
+`modifier` varchar(64)  DEFAULT NULL COMMENT '修改人',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配置表';

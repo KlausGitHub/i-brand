@@ -112,4 +112,19 @@ public class PatentDO {
      * @mbggenerated
      */
     private String auditDesc;
+
+    /**
+     * 创建时间
+     *
+     * @mbggenerated
+     */
+    private Date createTime;
+
+    /**
+     * 修改时间
+     *
+     * @mbggenerated
+     */
+    private Date modifyTime;
+
 }
