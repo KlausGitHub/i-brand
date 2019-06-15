@@ -48,6 +48,8 @@ create table t_brand(
 	audit_time DATETIME COMMENT '审核时间',
 	audit_desc VARCHAR(256) COMMENT '审核描述',
 	vip_flag char(1) COMMENT '明标标识 Y:明标 N:非明标',
+	create_time datetime DEFAULT NULL COMMENT '创建时间',
+  modify_time datetime DEFAULT NULL COMMENT '修改时间',
 	INDEX (customer_id)
 ) COMMENT '商标';
 
@@ -70,6 +72,8 @@ create table t_patent(
 	auditor BIGINT COMMENT '审核人',
 	audit_time DATETIME COMMENT '审核时间',
 	audit_desc VARCHAR(256) COMMENT '审核描述',
+	create_time datetime DEFAULT NULL COMMENT '创建时间',
+  modify_time datetime DEFAULT NULL COMMENT '修改时间',
 	INDEX (customer_id)
 ) COMMENT '专利';
 
@@ -86,3 +90,15 @@ CREATE TABLE `t_apply` (
   `is_deleted` char(1) COLLATE utf8_bin DEFAULT NULL COMMENT '逻辑删除标记Y已删除N未删除',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户服务申请表';
+
+
+create table t_service(
+	id BIGINT not null PRIMARY KEY AUTO_INCREMENT,
+	name varchar(256) COMMENT '名称',
+	price DECIMAL(10,2)  COMMENT '价格',
+	total BIGINT DEFAULT 0 COMMENT '成交数',
+	banner_url varchar(256) COMMENT '头图',
+	content text COMMENT '内容',
+	create_time datetime DEFAULT NULL COMMENT '创建时间',
+  modify_time datetime DEFAULT NULL COMMENT '修改时间'
+) COMMENT '专利';
