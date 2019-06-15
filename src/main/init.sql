@@ -1,23 +1,23 @@
 
 CREATE TABLE `t_customer` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '名称',
-  `login_name` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '登录名',
-  `mobile` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '手机号',
-  `email` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '邮箱',
-  `password` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '密码',
-  `vip_flag` char(1) COLLATE utf8_bin DEFAULT NULL COMMENT '会员标识 Y:会员 N:非会员',
+  `name` varchar(50) DEFAULT NULL COMMENT '名称',
+  `login_name` varchar(64) DEFAULT NULL COMMENT '登录名',
+  `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
+  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+  `password` varchar(64) DEFAULT NULL COMMENT '密码',
+  `vip_flag` char(1) DEFAULT NULL COMMENT '会员标识 Y:会员 N:非会员',
   `balance` decimal(10,2) DEFAULT NULL COMMENT '账户余额',
-  `head_logo` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '头像地址',
+  `head_logo` varchar(256) DEFAULT NULL COMMENT '头像地址',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `disable_flag` char(1) COLLATE utf8_bin DEFAULT NULL COMMENT '禁用标识 Y：禁用 N：不禁用',
+  `disable_flag` char(1) DEFAULT NULL COMMENT '禁用标识 Y：禁用 N：不禁用',
   `last_login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
-  `activation_code` varchar(64) COLLATE utf8_bin DEFAULT NULL COMMENT '激活码',
+  `activation_code` varchar(64) DEFAULT NULL COMMENT '激活码',
   PRIMARY KEY (`id`),
   UNIQUE KEY `t_customer_login_name` (`login_name`),
   UNIQUE KEY `t_customer_mobile` (`mobile`),
   UNIQUE KEY `t_customer_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户表';
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 COMMENT='客户表';
 
 
 create table t_brand(
@@ -51,7 +51,7 @@ create table t_brand(
 	create_time datetime DEFAULT NULL COMMENT '创建时间',
   modify_time datetime DEFAULT NULL COMMENT '修改时间',
 	INDEX (customer_id)
-) COMMENT '商标';
+) COMMENT '商标表';
 
 -- INSERT INTO `ibrand`.`t_customer` (`id`, `name`, `login_name`, `mobile`, `email`, `password`, `vip_flag`, `balance`, `head_logo`, `create_time`, `disable_flag`, `last_login_time`) VALUES ('1', 'test', 'test', '13322221111', 'test@qq.com', 'e10adc3949ba59abbe56e057f20f883e', 'N', '0.00', '', '2019-05-12 16:08:17', 'N', '2019-05-12 16:08:50');
 
@@ -75,7 +75,7 @@ create table t_patent(
 	create_time datetime DEFAULT NULL COMMENT '创建时间',
   modify_time datetime DEFAULT NULL COMMENT '修改时间',
 	INDEX (customer_id)
-) COMMENT '专利';
+) COMMENT '专利表';
 
 CREATE TABLE `t_apply` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -84,12 +84,12 @@ CREATE TABLE `t_apply` (
   `target_id` bigint(20) DEFAULT NULL COMMENT '申请的目标id',
   `status` tinyint(4) DEFAULT NULL COMMENT '申请状态0已申请1已成交2已拒绝',
   `amount` decimal(10,2) DEFAULT NULL COMMENT '申请金额',
-  `description` varchar(1024) COLLATE utf8_bin DEFAULT '' COMMENT '描述',
+  `description` varchar(1024) DEFAULT '' COMMENT '描述',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `is_deleted` char(1) COLLATE utf8_bin DEFAULT NULL COMMENT '逻辑删除标记Y已删除N未删除',
+  `is_deleted` char(1) DEFAULT NULL COMMENT '逻辑删除标记Y已删除N未删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='客户服务申请表';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='客户服务申请表';
 
 
 create table t_service(
@@ -101,4 +101,4 @@ create table t_service(
 	content text COMMENT '内容',
 	create_time datetime DEFAULT NULL COMMENT '创建时间',
   modify_time datetime DEFAULT NULL COMMENT '修改时间'
-) COMMENT '专利';
+) COMMENT '专利表';
