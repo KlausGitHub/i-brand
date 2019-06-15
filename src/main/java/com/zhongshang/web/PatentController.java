@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +44,8 @@ public class PatentController {
             BeanUtils.copyProperties(patentDTO,paramJson);
             patentDTO.setShowFlag("N");
             patentDTO.setDeleteFlag("N");
+            patentDTO.setCreateTime(new Date());
+            patentDTO.setModifyTime(new Date());
             //CustomerDTO customerDTO = customerService.get(patentDTO.getCustomerId());
 
             long patnetId = patentService.create(patentDTO);
@@ -61,7 +64,7 @@ public class PatentController {
             PatentDTO patentDTO = new PatentDTO();
             BeanUtils.copyProperties(patentDTO,paramJson);
             //CustomerDTO customerDTO = customerService.get(patentDTO.getCustomerId());
-
+            patentDTO.setModifyTime(new Date());
             int updateNum = patentService.update(patentDTO);
             if(updateNum == 1){
                 return ResultUtils.success(patentDTO);
@@ -82,6 +85,7 @@ public class PatentController {
             PatentDTO patentDTO = new PatentDTO();
             BeanUtils.copyProperties(patentDTO,paramJson);
             patentDTO.setDeleteFlag("Y");
+            patentDTO.setModifyTime(new Date());
             int deleteNum = patentService.update(patentDTO);
             if(deleteNum > 0){
                 return ResultUtils.success(true);

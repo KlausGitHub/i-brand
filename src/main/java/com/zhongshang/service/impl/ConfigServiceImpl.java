@@ -22,6 +22,7 @@ public class ConfigServiceImpl implements IConfigService {
     public Long create(ConfigDTO dto) {
         Preconditions.checkArgument(dto != null, "dto不能为空.");
         ConfigDO dataobject = new ConfigDO();
+        dataobject.setIsDeleted("N");
         BeanUtils.copyProperties(dto, dataobject);
         Long id = dao.insert(dataobject);
         return id;

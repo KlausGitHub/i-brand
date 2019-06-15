@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,6 +45,8 @@ public class BrandController {
             BeanUtils.copyProperties(brandDTO,paramJson);
             brandDTO.setShowFlag("N");
             brandDTO.setDeleteFlag("N");
+            brandDTO.setCreateTime(new Date());
+            brandDTO.setModifyTime(new Date());
             CustomerDTO customerDTO = customerService.get(brandDTO.getCustomerId());
             //会员创建的商标为名标
             if(customerDTO != null && customerDTO.getVipFlag().equals("Y")){
@@ -68,7 +71,7 @@ public class BrandController {
             BrandDTO brandDTO = new BrandDTO();
             BeanUtils.copyProperties(brandDTO,paramJson);
             CustomerDTO customerDTO = customerService.get(brandDTO.getCustomerId());
-
+            brandDTO.setModifyTime(new Date());
             int updateNum = brandService.update(brandDTO);
             if(updateNum == 1){
                 return ResultUtils.success(brandDTO);
@@ -89,6 +92,7 @@ public class BrandController {
             BrandDTO brandDTO = new BrandDTO();
             BeanUtils.copyProperties(brandDTO,paramJson);
             brandDTO.setDeleteFlag("Y");
+            brandDTO.setModifyTime(new Date());
             int deleteNum = brandService.update(brandDTO);
             if(deleteNum > 0){
                 return ResultUtils.success(true);
