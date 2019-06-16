@@ -52,6 +52,10 @@ public enum ErrorCode {
 
     APPLY_ERROR("50001","服务申请失败"),
     APPLY_NOT_EXIST("50002","服务申请不存在"),
+
+
+    PUB_COLLECT_ERROR("60001","发布或者收藏失败"),
+    PUB_COLLECT_LIST_ERROR("60002","查询发布或者收藏列表失败"),
     ;
 
     private String code;

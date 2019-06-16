@@ -12,4 +12,9 @@ public class BrandConstant {
     public static final Integer PHONE_TYPE = 1;//手机号登录
     public static final Integer EMAIL_TYPE = 2;//邮箱登录
     public static final Integer LOGIN_NAME_TYPE = 3;//用户名登录
+
+    //发布类型
+    public static final int PUB_TYPE = 1;
+    //收藏类型
+    public static final int COLLECT_TYPE = 2;
 }
