@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -82,11 +83,18 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "activate", method = RequestMethod.GET)
-    public BaseResult<Boolean> activate(HttpServletRequest request) {
+    public BaseResult<Boolean> activate(HttpServletRequest request, HttpServletResponse response) {
         try {
             String code = request.getParameter("code");
             log.info("邮箱激活请求开始，code={}", code);
-            Preconditions.checkNotNull(StringUtils.isNotBlank(code));
+            Preconditions.checkNotNull(StringUtils.isNotBlank(code), "邮箱激活码不能为空");
+            BaseResult<Boolean> result = customerService.activate(code);
+            if (result != null && result.success()) {
+                //激活成功
+                response.sendRedirect("https://www.baidu.com");
+            } else {
+                response.sendRedirect("https://www.baidu.com");
+            }
             return customerService.activate(code);
         } catch (Exception e) {
             log.error("email activate error, caused by ={}", e);
