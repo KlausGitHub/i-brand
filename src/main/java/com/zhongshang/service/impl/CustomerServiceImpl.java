@@ -81,6 +81,23 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
+    public List<CustomerDTO> listByIds(List<Long> ids) {
+        List<CustomerDTO> lists = Lists.newArrayList();
+        if (ids == null || ids.size() == 0) {
+            return lists;
+        }
+        List<CustomerDO> models = dao.selectByIds(ids);
+        if (models != null && models.size() > 0) {
+            for (CustomerDO bdo : models) {
+                CustomerDTO bDto = new CustomerDTO();
+                BeanUtils.copyProperties(bdo, bDto);
+                lists.add(bDto);
+            }
+        }
+        return lists;
+    }
+
+    @Override
     public int count(CustomerDTO dto) {
         Preconditions.checkArgument(dto != null, "查询条件不能为空.");
         CustomerDO model = new CustomerDO();

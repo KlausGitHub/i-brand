@@ -2,7 +2,9 @@ package com.zhongshang.web;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.zhongshang.common.BaseResult;
+import com.zhongshang.common.BrandConstant;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
 import com.zhongshang.dto.CustomerDTO;
@@ -14,6 +16,7 @@ import com.zhongshang.response.LoginResponse;
 import com.zhongshang.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author yangsheng
@@ -115,10 +119,35 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 重置密码
+     *
+     * @param req
+     * @return
+     */
     @RequestMapping(value = "changePwd", method = RequestMethod.POST)
     public BaseResult<Boolean> changePwd(@RequestBody ChangePwdRequest req) {
-
-        return null;
+        try {
+            log.info("重置密码请求开始,请求参数={}", JSON.toJSONString(req));
+            Preconditions.checkNotNull(req.getCustomerId(), "客户id不能为空");
+            Preconditions.checkNotNull(req.getOldPwd(), "原始密码不能为空");
+            Preconditions.checkNotNull(req.getNewPwd(), "新密码不能为空");
+            CustomerDTO cDto = customerService.get(req.getCustomerId());
+            if (cDto == null) {
+                log.error("修改密码时未查询到用户信息，请求用户id={}", req.getCustomerId());
+                return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, Boolean.FALSE, "未查询到该用户");
+            }
+            String oldPwd = req.getOldPwd() + BrandConstant.PWD_KEY;
+            if (!cDto.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes()))) {
+                return ResultUtils.fail(ErrorCode.CHANGE_OLD_PASSWORD_ERROR, false);
+            }
+            String newPwd = req.getNewPwd() + BrandConstant.PWD_KEY;
+            cDto.setPassword(DigestUtils.md5DigestAsHex(newPwd.getBytes()));
+            return ResultUtils.success(customerService.update(cDto) > 0);
+        } catch (Exception e) {
+            log.error("change customer password error, caused by = ", e);
+            return ResultUtils.fail(ErrorCode.CHANGE_PASSWORD_ERROR, false, e.getMessage());
+        }
     }
 
 

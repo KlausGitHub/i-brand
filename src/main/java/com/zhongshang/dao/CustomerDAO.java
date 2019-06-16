@@ -3,6 +3,7 @@ package com.zhongshang.dao;
 
 import com.zhongshang.model.CustomerDO;
 import com.zhongshang.request.LoginRequest;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface CustomerDAO {
     int updateByPrimaryKey(CustomerDO record);
 
     List<CustomerDO> selectByCond(CustomerDO cond);
+
+    List<CustomerDO> selectByIds(@Param("ids") List<Long> ids);
 
     int countByCond(CustomerDO cond);
 

@@ -19,6 +19,8 @@ public interface ICustomerService {
 
     List<CustomerDTO> list(CustomerDTO dto);
 
+    List<CustomerDTO> listByIds(List<Long> ids);
+
     int count(CustomerDTO dto);
 
     CustomerDTO get(Long id);
