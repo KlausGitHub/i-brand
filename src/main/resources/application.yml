@@ -20,7 +20,7 @@ spring:
     allowedOrigin: all
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"
-    url: jdbc:mysql://58.87.66.77:3306/brand?useUnicode=true&amp;characterEncoding=UTF8
+    url: jdbc:mysql://localhost:3306/brand?useUnicode=true&amp;characterEncoding=UTF8
     username: root
     password: "4eSFp&9x$kd:1s~@"
     driver-class-name: "com.mysql.jdbc.Driver"
