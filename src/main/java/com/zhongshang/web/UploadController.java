@@ -53,9 +53,4 @@ public class UploadController {
             return ResultUtils.fail(ErrorCode.COMMON_UPLOAD_ERR, null);
         }
     }
-
-    public static void main(String[] args) {
-        String name = "123.jpg";
-        System.out.println(name.substring(name.lastIndexOf(".")));
-    }
 }

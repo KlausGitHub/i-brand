@@ -3,7 +3,7 @@ server:
 
 
 logging:
-  path: /Users/Hero/logs/i-brand
+  path: /root/logs/brand
   level.root: info
 
 mail:
@@ -20,9 +20,9 @@ spring:
     allowedOrigin: all
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"
-    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF8
+    url: jdbc:mysql://58.87.66.77:3306/brand?useUnicode=true&amp;characterEncoding=UTF8
     username: root
-    password: root
+    password: "4eSFp&9x$kd:1s~@"
     driver-class-name: "com.mysql.jdbc.Driver"
     # 初始化大小，最小，最大
     initialSize: 5
@@ -48,4 +48,4 @@ spring:
     #    connectionProperties: druid.stat.mergeSql: true;
     druid.stat.slowSqlMillis: 5000
 
-uploadPath: /Users/Hero/
+uploadPath: /root/data
