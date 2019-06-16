@@ -9,6 +9,8 @@ import com.zhongshang.common.*;
 import com.zhongshang.dto.BrandDTO;
 import com.zhongshang.dto.PatentDTO;
 import com.zhongshang.dto.PubCollectDTO;
+import com.zhongshang.service.IBrandService;
+import com.zhongshang.service.IPatentService;
 import com.zhongshang.service.IPubCollectService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
@@ -35,6 +37,10 @@ public class PubCollectController {
 
     @Resource
     private IPubCollectService pubCollectService;
+    @Resource
+    private IBrandService brandService;
+    @Resource
+    private IPatentService patentService;
 
     /**
      * 发布或者收藏(商标、专利)
@@ -147,11 +153,11 @@ public class PubCollectController {
                 List<Long> targetIds = pubList.stream().map(PubCollectDTO::getTargetId).collect(Collectors.toList());
                 if (pubDto.getContentType().equals(TypeEnum.BRAND.getCode())) {
                     //调用brand的查询
-                    List<BrandDTO> brands = Lists.newArrayList();
+                    List<BrandDTO> brands = brandService.listByIds(targetIds);
                     targetJson.put("brands", brands);
                 } else if (pubDto.getContentType().equals(TypeEnum.PATENT.getCode())) {
                     //调用patent的查询
-                    List<PatentDTO> patents = Lists.newArrayList();
+                    List<PatentDTO> patents = patentService.listByIds(targetIds);
                     targetJson.put("patents", patents);
                 }
                 json.put("result", targetJson);
