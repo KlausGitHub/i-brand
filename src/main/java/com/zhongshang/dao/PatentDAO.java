@@ -2,6 +2,7 @@ package com.zhongshang.dao;
 
 
 import com.zhongshang.model.PatentDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface PatentDAO {
     int updateByPrimaryKey(PatentDO record);
 
     List<PatentDO> selectByCond(PatentDO cond);
+
+    List<PatentDO> selectByIds(@Param("ids") List<Long> ids);
 
     int countByCond(PatentDO cond);
 }

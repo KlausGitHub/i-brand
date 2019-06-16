@@ -76,6 +76,9 @@ public class ApplyServiceImpl implements IApplyService {
     public ApplyDTO get(long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         ApplyDO dataobject = dao.selectByPrimaryKey(id);
+        if(dataobject == null){
+            return null;
+        }
         ApplyDTO applyDTO = new ApplyDTO();
         BeanUtils.copyProperties(dataobject, applyDTO);
         return applyDTO;

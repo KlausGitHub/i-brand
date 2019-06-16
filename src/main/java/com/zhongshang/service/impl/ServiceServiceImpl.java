@@ -72,8 +72,28 @@ public class ServiceServiceImpl implements IServiceService {
     public ServiceDTO get(long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         ServiceDO dataobject = dao.selectByPrimaryKey(id);
+        if(dataobject == null){
+            return null;
+        }
         ServiceDTO serviceDTO = new ServiceDTO();
         BeanUtils.copyProperties(dataobject, serviceDTO);
         return serviceDTO;
+    }
+
+    @Override
+    public List<ServiceDTO> listByIds(List<Long> ids) {
+        List<ServiceDTO> lists = Lists.newArrayList();
+        if (ids == null || ids.size() == 0) {
+            return lists;
+        }
+        List<ServiceDO> models = dao.selectByIds(ids);
+        if (models != null && models.size() > 0) {
+            for (ServiceDO bdo : models) {
+                ServiceDTO bDto = new ServiceDTO();
+                BeanUtils.copyProperties(bdo, bDto);
+                lists.add(bDto);
+            }
+        }
+        return lists;
     }
 }

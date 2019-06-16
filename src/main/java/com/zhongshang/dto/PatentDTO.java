@@ -130,4 +130,8 @@ public class PatentDTO {
      * @mbggenerated
      */
     private Date modifyTime;
+
+    private String customerName;
+    private String customerLoginName;
+    private String customerMobile;
 }

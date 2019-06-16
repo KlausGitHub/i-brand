@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
+import com.zhongshang.dto.CustomerDTO;
 import com.zhongshang.dto.PatentDTO;
 import com.zhongshang.service.ICustomerService;
 import com.zhongshang.service.IPatentService;
@@ -20,6 +21,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author niuqun
@@ -102,6 +105,14 @@ public class PatentController {
         try{
             log.info("根据ID查询专利请求开始，参数={}", req.getParameter("id"));
             PatentDTO patentDTO = patentService.get(Long.parseLong(req.getParameter("id")));
+            if(patentDTO != null && patentDTO.getCustomerId() != null){
+                CustomerDTO customer = customerService.get(patentDTO.getCustomerId());
+                if(customer != null){
+                    patentDTO.setCustomerName(customer.getName());
+                    patentDTO.setCustomerLoginName(customer.getLoginName());
+                    patentDTO.setCustomerMobile(customer.getMobile());
+                }
+            }
             return ResultUtils.success(patentDTO);
         }catch(Exception e){
             log.error("getById brand error, caused by ={}", e);
@@ -120,6 +131,25 @@ public class PatentController {
             Integer pageSize = patentDTO.getPageSize() != 0 ? patentDTO.getPageSize() : 10 ;
             Page page = PageHelper.startPage(pageNum, pageSize, true);
             List<PatentDTO> list = patentService.list(patentDTO);
+
+            if(list != null && list.size() > 0 ){
+                List<Long> ids = list.stream().map(PatentDTO::getCustomerId).collect(Collectors.toList());
+                if(ids != null && ids.size() > 0){
+                    List<CustomerDTO> customerDTOList = customerService.listByIds(ids);
+                    if(customerDTOList != null && customerDTOList.size() > 0){
+                        Map<Long,CustomerDTO> customerDTOMap = customerDTOList.stream().collect(Collectors.toMap(CustomerDTO::getId, o->o));
+                        for(PatentDTO dto  : list){
+                            CustomerDTO customerDTO = customerDTOMap.get(dto.getCustomerId());
+                            if(customerDTO == null)
+                                continue;
+                            dto.setCustomerName(customerDTO.getName());
+                            dto.setCustomerLoginName(customerDTO.getLoginName());
+                            dto.setCustomerMobile(customerDTO.getMobile());
+                        }
+                    }
+                }
+            }
+
             JSONObject json = new JSONObject();
             json.put("pageNum",pageNum);
             json.put("pageSize",pageSize);

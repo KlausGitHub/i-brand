@@ -200,4 +200,14 @@
         select count(*) from t_service
         <include refid="BASE_COND_LIST"/>
     </select>
+
+    <select id="selectByIds" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_service
+        where id in
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

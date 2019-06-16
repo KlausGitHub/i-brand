@@ -73,8 +73,28 @@ public class BrandServiceImpl implements IBrandService {
     public BrandDTO get(Long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         BrandDO model = dao.selectByPrimaryKey(id);
+        if(model == null){
+            return null;
+        }
         BrandDTO result = new BrandDTO();
         BeanUtils.copyProperties(model, result);
         return result;
+    }
+
+    @Override
+    public List<BrandDTO> listByIds(List<Long> ids) {
+        List<BrandDTO> lists = Lists.newArrayList();
+        if (ids == null || ids.size() == 0) {
+            return lists;
+        }
+        List<BrandDO> models = dao.selectByIds(ids);
+        if (models != null && models.size() > 0) {
+            for (BrandDO bdo : models) {
+                BrandDTO bDto = new BrandDTO();
+                BeanUtils.copyProperties(bdo, bDto);
+                lists.add(bDto);
+            }
+        }
+        return lists;
     }
 }

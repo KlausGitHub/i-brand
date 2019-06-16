@@ -15,6 +15,8 @@ public interface IBrandService {
 
     List<BrandDTO> list(BrandDTO dto);
 
+    List<BrandDTO> listByIds(List<Long> ids);
+
     int count(BrandDTO dto);
 
     BrandDTO get(Long id);

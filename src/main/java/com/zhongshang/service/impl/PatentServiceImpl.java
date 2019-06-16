@@ -72,8 +72,28 @@ public class PatentServiceImpl implements IPatentService {
     public PatentDTO get(Long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         PatentDO model = dao.selectByPrimaryKey(id);
+        if(model == null){
+            return null;
+        }
         PatentDTO result = new PatentDTO();
         BeanUtils.copyProperties(model, result);
         return result;
+    }
+
+    @Override
+    public List<PatentDTO> listByIds(List<Long> ids) {
+        List<PatentDTO> lists = Lists.newArrayList();
+        if (ids == null || ids.size() == 0) {
+            return lists;
+        }
+        List<PatentDO> models = dao.selectByIds(ids);
+        if (models != null && models.size() > 0) {
+            for (PatentDO bdo : models) {
+                PatentDTO bDto = new PatentDTO();
+                BeanUtils.copyProperties(bdo, bDto);
+                lists.add(bDto);
+            }
+        }
+        return lists;
     }
 }

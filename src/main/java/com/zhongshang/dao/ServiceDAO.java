@@ -1,6 +1,7 @@
 package com.zhongshang.dao;
 
 import com.zhongshang.model.ServiceDO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface ServiceDAO {
     int updateByPrimaryKey(ServiceDO record);
 
     List<ServiceDO> selectByCond(ServiceDO cond);
+
+    List<ServiceDO> selectByIds(@Param("ids") List<Long> ids);
 
     int countByCond(ServiceDO cond);
 }

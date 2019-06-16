@@ -207,4 +207,8 @@ public class BrandDTO {
      * @mbggenerated
      */
     private Date modifyTime;
+
+    private String customerName;
+    private String customerLoginName;
+    private String customerMobile;
 }

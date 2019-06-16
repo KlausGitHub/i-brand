@@ -14,6 +14,8 @@ public interface IServiceService {
 
     List<ServiceDTO> list(ServiceDTO dto);
 
+    List<ServiceDTO> listByIds(List<Long> ids);
+
     int count(ServiceDTO dto);
 
     ServiceDTO get(long id);

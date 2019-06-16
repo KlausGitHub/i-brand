@@ -76,6 +76,9 @@ public class ConfigServiceImpl implements IConfigService {
     public ConfigDTO get(long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         ConfigDO dataobject = dao.selectByPrimaryKey(id);
+        if(dataobject == null){
+            return null;
+        }
         ConfigDTO configDTO = new ConfigDTO();
         BeanUtils.copyProperties(dataobject, configDTO);
         return configDTO;

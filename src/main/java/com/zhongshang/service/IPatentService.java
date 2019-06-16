@@ -14,6 +14,8 @@ public interface IPatentService {
 
     List<PatentDTO> list(PatentDTO dto);
 
+    List<PatentDTO> listByIds(List<Long> ids);
+
     int count(PatentDTO dto);
 
     PatentDTO get(Long id);

@@ -61,4 +61,8 @@ public class ServiceDTO {
      * @mbggenerated
      */
     private Date modifyTime;
+
+    private String customerName;
+    private String customerLoginName;
+    private String customerMobile;
 }

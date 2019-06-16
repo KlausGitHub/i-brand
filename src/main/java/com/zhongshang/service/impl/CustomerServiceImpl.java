@@ -110,6 +110,9 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDTO get(Long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         CustomerDO model = dao.selectByPrimaryKey(id);
+        if(model == null){
+            return null;
+        }
         CustomerDTO result = new CustomerDTO();
         BeanUtils.copyProperties(model, result);
         return result;

@@ -1,6 +1,5 @@
 package com.zhongshang.web;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author niuqun
@@ -110,6 +109,15 @@ public class BrandController {
         try{
             log.info("根据ID查询商标请求开始，参数={}", req.getParameter("id"));
             BrandDTO brandDTO = brandService.get(Long.parseLong(req.getParameter("id")));
+            if(brandDTO != null && brandDTO.getCustomerId() != null){
+                CustomerDTO customer = customerService.get(brandDTO.getCustomerId());
+                if(customer != null){
+                    brandDTO.setCustomerName(customer.getName());
+                    brandDTO.setCustomerLoginName(customer.getLoginName());
+                    brandDTO.setCustomerMobile(customer.getMobile());
+                }
+
+            }
             return ResultUtils.success(brandDTO);
         }catch(Exception e){
             log.error("getById error, caused by ={}", e);
@@ -128,6 +136,24 @@ public class BrandController {
             Integer pageSize = brandDTO.getPageSize() != 0 ? brandDTO.getPageSize() : 10 ;
             Page page = PageHelper.startPage(pageNum, pageSize, true);
             List<BrandDTO> list = brandService.list(brandDTO);
+
+            if(list != null && list.size() > 0 ){
+                List<Long> ids = list.stream().map(BrandDTO::getCustomerId).collect(Collectors.toList());
+                if(ids != null && ids.size() > 0){
+                    List<CustomerDTO> customerDTOList = customerService.listByIds(ids);
+                    if(customerDTOList != null && customerDTOList.size() > 0){
+                        Map<Long,CustomerDTO> customerDTOMap = customerDTOList.stream().collect(Collectors.toMap(CustomerDTO::getId,o->o));
+                        for(BrandDTO brand  : list){
+                            CustomerDTO customerDTO = customerDTOMap.get(brand.getCustomerId());
+                            if(customerDTO == null)
+                                continue;
+                            brand.setCustomerName(customerDTO.getName());
+                            brand.setCustomerLoginName(customerDTO.getLoginName());
+                            brand.setCustomerMobile(customerDTO.getMobile());
+                        }
+                    }
+                }
+            }
             JSONObject json = new JSONObject();
             json.put("pageNum",pageNum);
             json.put("pageSize",pageSize);
