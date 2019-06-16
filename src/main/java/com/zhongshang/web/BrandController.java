@@ -12,6 +12,7 @@ import com.zhongshang.service.IBrandService;
 import com.zhongshang.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -132,6 +133,18 @@ public class BrandController {
             BrandDTO brandDTO = new BrandDTO();
             BeanUtils.copyProperties(brandDTO,paramJson);
             brandDTO.setDeleteFlag("N");
+
+            if(brandDTO != null && StringUtils.isNotBlank(brandDTO.getCustomerMobile())){
+                CustomerDTO customerDTO = new CustomerDTO();
+                customerDTO.setMobile(brandDTO.getCustomerMobile());
+                List<CustomerDTO> searCustomerList = customerService.list(customerDTO);
+                if(searCustomerList != null && searCustomerList.size()>0){
+                    if(searCustomerList.get(0) != null){
+                        brandDTO.setCustomerId(searCustomerList.get(0).getId());
+                    }
+                }
+            }
+
             Integer pageNum = brandDTO.getPageNum() != 0 ? brandDTO.getPageNum() : 1 ;
             Integer pageSize = brandDTO.getPageSize() != 0 ? brandDTO.getPageSize() : 10 ;
             Page page = PageHelper.startPage(pageNum, pageSize, true);

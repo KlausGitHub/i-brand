@@ -12,6 +12,7 @@ import com.zhongshang.service.ICustomerService;
 import com.zhongshang.service.IPatentService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -127,6 +128,18 @@ public class PatentController {
             PatentDTO patentDTO = new PatentDTO();
             BeanUtils.copyProperties(patentDTO,paramJson);
             patentDTO.setDeleteFlag("N");
+
+            if(patentDTO != null && StringUtils.isNotBlank(patentDTO.getCustomerMobile())){
+                CustomerDTO customerDTO = new CustomerDTO();
+                customerDTO.setMobile(patentDTO.getCustomerMobile());
+                List<CustomerDTO> searCustomerList = customerService.list(customerDTO);
+                if(searCustomerList != null && searCustomerList.size()>0){
+                    if(searCustomerList.get(0) != null){
+                        patentDTO.setCustomerId(searCustomerList.get(0).getId());
+                    }
+                }
+            }
+
             Integer pageNum = patentDTO.getPageNum() != 0 ? patentDTO.getPageNum() : 1 ;
             Integer pageSize = patentDTO.getPageSize() != 0 ? patentDTO.getPageSize() : 10 ;
             Page page = PageHelper.startPage(pageNum, pageSize, true);
