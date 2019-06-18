@@ -7,11 +7,11 @@ logging:
   level.root: info
 
 mail:
-  account: "873959792@qq.com"
-  password: "rwwwbtlnfmrybebh"
+  account: "zsbyvip@163.com"
+  password: "zsbyvip666"
   smtp:
-    host: smtp.qq.com
-    port: 25
+    host: smtp.163.com
+    port: 465
     auth: true
 
 

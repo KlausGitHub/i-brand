@@ -39,6 +39,7 @@ public class EmailService {
         p.put("mail.smtp.host", smtpHost);
         p.put("mail.smtp.port", smtpPort);
         p.put("mail.smtp.auth", smtpAuth);
+        p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 
         // 根据邮件会话属性和密码验证器构造一个发送邮件的session
         mailSession = Session.getDefaultInstance(p, new Authenticator() {
