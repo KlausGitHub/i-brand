@@ -195,9 +195,8 @@ public class CustomerServiceImpl implements ICustomerService {
         taskExecutor.execute(() -> {
             log.info("注册发送邮件线程开始，邮箱={}", email);
             try {
-                emailService.send(email, null, "注册验证", "亲爱的用户：\n" +
-                        "您好！感谢您使用北京中商企研企业邮箱注册服务，您正在进行邮箱验证，请点击以下链接完成验证：\n" +
-                        "http://localhost:8080/v1/customer/activate?code=" + code, null);
+                emailService.send(email, null, "中源商标网注册验证", "用户您好：十分感谢您选择中源商标网！您当前正进行注册验证，请点击以下链接完成注册，谢谢！：\n" +
+                        "http://58.87.66.77:8080/v1/customer/activate?code=" + code, null);
                 log.info("邮件发送成功");
             } catch (Exception e) {
                 log.error("邮箱发送失败", e);
