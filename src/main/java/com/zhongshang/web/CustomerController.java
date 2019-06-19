@@ -2,7 +2,6 @@ package com.zhongshang.web;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.BrandConstant;
 import com.zhongshang.common.ErrorCode;
@@ -14,18 +13,15 @@ import com.zhongshang.request.RegisterRequest;
 import com.zhongshang.request.UpdateRequest;
 import com.zhongshang.response.LoginResponse;
 import com.zhongshang.service.ICustomerService;
+import com.zhongshang.utils.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author yangsheng
@@ -125,6 +121,37 @@ public class CustomerController {
             log.error("update customer error, caused by = {}", e);
             return ResultUtils.fail(ErrorCode.UPDATE_CUSTOMER_ERROR, Boolean.FALSE);
         }
+    }
+
+    /**
+     * 根据邮箱/手机号/登录名查询用户是否存在
+     *
+     * @param loginName
+     * @return
+     */
+    @RequestMapping(value = "find", method = RequestMethod.GET)
+    public BaseResult<Boolean> find(@RequestParam("loginName") String loginName) {
+        log.info("查询用户信息是否存在，参数={}", loginName);
+        if (StringUtils.isEmpty(loginName)) {
+            return ResultUtils.fail(ErrorCode.COMMON_NOT_EMPTY_ERR, false, "查询条件");
+        }
+        LoginRequest loginRequest = new LoginRequest();
+        if (RegexUtils.phoneRegex(loginName)) {
+            //手机号码登录
+            loginRequest.setLoginType(BrandConstant.PHONE_TYPE);
+        } else if (RegexUtils.emailRegex(loginName)) {
+            //邮箱登录
+            loginRequest.setLoginType(BrandConstant.EMAIL_TYPE);
+        } else {
+            //用户名登录
+            loginRequest.setLoginType(BrandConstant.LOGIN_NAME_TYPE);
+        }
+        loginRequest.setLoginName(loginName);
+        CustomerDTO dbCustomer = customerService.getByLoginName(loginRequest);
+        if (dbCustomer != null) {
+            return ResultUtils.success(true);
+        }
+        return ResultUtils.fail(ErrorCode.EMAIL_NOT_EXISTS, false);
     }
 
     /**

@@ -33,7 +33,7 @@ public enum ErrorCode {
     COMMON_UPDATE_ERR("20013", "修改失败,{0}"),
     COMMON_DELETE_ERR("20014", "删除失败,{0}"),
     COMMON_QUERY_ERR("20015", "查询失败,{0}"),
-    COMMON_NOT_EMPTY_ERR("20016", "{0}信息不能为空"),
+    COMMON_NOT_EMPTY_ERR("20016", "{0}不能为空"),
     COMMON_REQUEST_INVALID("20018", "请求无效：{0}"),
     COMMON_LOCK_GET_FAIL("20019", "无法获取锁"),
     COMMON_VERIFY_SING_FAIL("20020", "验签失败"),
@@ -49,6 +49,7 @@ public enum ErrorCode {
     UPDATE_CUSTOMER_ERROR("30007", "更新失败"),
     CHANGE_OLD_PASSWORD_ERROR("30008", "原始密码不对"),
     CHANGE_PASSWORD_ERROR("30009", "密码修改失败"),
+    EMAIL_NOT_EXISTS("30010", "邮箱不存在"),
 
     APPLY_ERROR("50001","服务申请失败"),
     APPLY_NOT_EXIST("50002","服务申请不存在"),

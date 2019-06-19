@@ -122,6 +122,9 @@ public class CustomerServiceImpl implements ICustomerService {
     public CustomerDTO getByLoginName(LoginRequest request) {
         Preconditions.checkArgument(request != null, "参数不能为空");
         CustomerDO model = dao.selectByLoginName(request);
+        if (model == null){
+            return null;
+        }
         CustomerDTO result = new CustomerDTO();
         BeanUtils.copyProperties(model, result);
         return result;
