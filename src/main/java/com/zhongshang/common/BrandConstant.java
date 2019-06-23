@@ -17,4 +17,9 @@ public class BrandConstant {
     public static final int PUB_TYPE = 1;
     //收藏类型
     public static final int COLLECT_TYPE = 2;
+
+    //修改密码
+    public static final int CHANGE_PWD = 1;
+    //忘记密码
+    public static final int FORGET_PWD = 2;
 }

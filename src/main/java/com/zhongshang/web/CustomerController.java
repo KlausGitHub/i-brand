@@ -135,10 +135,10 @@ public class CustomerController {
      * @return
      */
     @RequestMapping(value = "find", method = RequestMethod.GET)
-    public BaseResult<Boolean> find(@RequestParam("loginName") String loginName) {
+    public BaseResult<Long> find(@RequestParam("loginName") String loginName) {
         log.info("查询用户信息是否存在，参数={}", loginName);
         if (StringUtils.isEmpty(loginName)) {
-            return ResultUtils.fail(ErrorCode.COMMON_NOT_EMPTY_ERR, false, "查询条件");
+            return ResultUtils.fail(ErrorCode.COMMON_NOT_EMPTY_ERR, null, "查询条件");
         }
         LoginRequest loginRequest = new LoginRequest();
         if (RegexUtils.phoneRegex(loginName)) {
@@ -154,9 +154,9 @@ public class CustomerController {
         loginRequest.setLoginName(loginName);
         CustomerDTO dbCustomer = customerService.getByLoginName(loginRequest);
         if (dbCustomer != null) {
-            return ResultUtils.success(true);
+            return ResultUtils.success(dbCustomer.getId());
         }
-        return ResultUtils.fail(ErrorCode.CUSTOMER_NOT_EXISTS, false);
+        return ResultUtils.fail(ErrorCode.CUSTOMER_NOT_EXISTS, null);
     }
 
     /**
@@ -177,9 +177,12 @@ public class CustomerController {
                 log.error("修改密码时未查询到用户信息，请求用户id={}", req.getCustomerId());
                 return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, Boolean.FALSE, "未查询到该用户");
             }
-            String oldPwd = req.getOldPwd() + BrandConstant.PWD_KEY;
-            if (!cDto.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes()))) {
-                return ResultUtils.fail(ErrorCode.CHANGE_OLD_PASSWORD_ERROR, false);
+            //修改密码时候校验旧密码
+            if (req.getType() == BrandConstant.CHANGE_PWD) {
+                String oldPwd = req.getOldPwd() + BrandConstant.PWD_KEY;
+                if (!cDto.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes()))) {
+                    return ResultUtils.fail(ErrorCode.CHANGE_OLD_PASSWORD_ERROR, false);
+                }
             }
             String newPwd = req.getNewPwd() + BrandConstant.PWD_KEY;
             cDto.setPassword(DigestUtils.md5DigestAsHex(newPwd.getBytes()));

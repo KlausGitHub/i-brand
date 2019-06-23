@@ -25,6 +25,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         excludeList.add("/v1/customer/register");
         excludeList.add("/v1/customer/login");
         excludeList.add("/v1/customer/activate");
+        excludeList.add("/v1/customer/find");
+        excludeList.add("/v1/customer/changePwd");
 
         //DiorsNiu class
         excludeList.add("/v1/brand/**");
