@@ -8,6 +8,7 @@ import com.zhongshang.dto.ServiceDTO;
 import com.zhongshang.service.IServiceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -73,14 +74,22 @@ public class ServiceController {
     public BaseResult<Boolean> delete(@RequestBody JSONObject paramJson) {
         try {
             log.info("删除服务请求开始，参数={}", paramJson.toJSONString());
-            ServiceDTO serviceDTO = new ServiceDTO();
-            BeanUtils.copyProperties(serviceDTO, paramJson);
-            int deleteNum = serviceService.delete(serviceDTO.getId());
-            if (deleteNum > 0) {
-                return ResultUtils.success(true);
-            } else {
-                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR, null, "未找到数据");
+            String delteIds = paramJson.getString("ids");
+            String failMessage = "";
+            if(StringUtils.isNotBlank(delteIds) && delteIds.split(",").length > 0){
+                for (String id : delteIds.split(",")){
+                    ServiceDTO serviceDTO = new ServiceDTO();
+                    serviceDTO.setId(Long.parseLong(id));
+                    int deleteNum = serviceService.delete(serviceDTO.getId());
+                    if(deleteNum <= 0){
+                        failMessage+="["+id+"]删除失败!";
+                    }
+                }
             }
+            if(StringUtils.isNotBlank(failMessage)){
+                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR,null,failMessage);
+            }
+            return ResultUtils.success(true);
         } catch (Exception e) {
             log.error("delete error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_DELETE_ERR, false);

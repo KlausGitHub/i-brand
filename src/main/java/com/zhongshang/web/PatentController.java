@@ -85,16 +85,24 @@ public class PatentController {
     public BaseResult<Boolean> delete(@RequestBody JSONObject paramJson){
         try{
             log.info("删除专利请求开始，参数={}", paramJson.toJSONString());
-            PatentDTO patentDTO = new PatentDTO();
-            BeanUtils.copyProperties(patentDTO,paramJson);
-            patentDTO.setDeleteFlag("Y");
-            patentDTO.setModifyTime(new Date());
-            int deleteNum = patentService.update(patentDTO);
-            if(deleteNum > 0){
-                return ResultUtils.success(true);
-            }else{
-                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR,null,"未找到数据");
+            String delteIds = paramJson.getString("ids");
+            String failMessage = "";
+            if(StringUtils.isNotBlank(delteIds) && delteIds.split(",").length > 0){
+                for (String id : delteIds.split(",")){
+                    PatentDTO patentDTO = new PatentDTO();
+                    patentDTO.setId(Long.parseLong(id));
+                    patentDTO.setDeleteFlag("Y");
+                    patentDTO.setModifyTime(new Date());
+                    int deleteNum = patentService.update(patentDTO);
+                    if(deleteNum <= 0){
+                        failMessage+="["+id+"]删除失败!";
+                    }
+                }
             }
+            if(StringUtils.isNotBlank(failMessage)){
+                return ResultUtils.fail(ErrorCode.COMMON_REPOSITORY_ERR,null,failMessage);
+            }
+            return ResultUtils.success(true);
         }catch(Exception e){
             log.error("delete error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_DELETE_ERR, false);
