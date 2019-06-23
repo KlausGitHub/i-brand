@@ -1,6 +1,9 @@
 package com.zhongshang.web;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.google.common.base.Preconditions;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.BrandConstant;
@@ -16,12 +19,14 @@ import com.zhongshang.service.ICustomerService;
 import com.zhongshang.utils.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author yangsheng
@@ -185,6 +190,33 @@ public class CustomerController {
         }
     }
 
+    /**
+     * 查询会员信息列表
+     *
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "list", method = RequestMethod.POST)
+    public BaseResult<JSONObject> list(@RequestBody JSONObject req) {
+        log.info("查询会员列表请求开始,请求参数={}", JSON.toJSONString(req));
+        JSONObject json = new JSONObject();
+        try {
+            CustomerDTO cDto = new CustomerDTO();
+            BeanUtils.copyProperties(req, cDto);
+            int pageNum = req.getInteger("pageNum");
+            int pageSize = req.getInteger("pageSize");
+            Page page = PageHelper.startPage(pageNum > 0 ? pageNum : 1, pageSize > 0 ? pageSize : 10, true);
+            List<CustomerDTO> list = customerService.list(cDto);
+            json.put("pageNum", pageNum);
+            json.put("pageSize", pageSize);
+            json.put("total", page.getTotal());
+            json.put("result", list);
+            return ResultUtils.success(json);
+        } catch (Exception e) {
+            log.error("查询会员信息失败", e);
+            return ResultUtils.fail(ErrorCode.SYS_RUN_EXCEPTION, json, "会员列表查询");
+        }
+    }
 
     private String checkParam(LoginRequest req) {
         if (StringUtils.isEmpty(req.getLoginName())) {
