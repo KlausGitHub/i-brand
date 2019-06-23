@@ -52,4 +52,4 @@ spring:
     druid.stat.slowSqlMillis: 5000
 
 #uploadPath: /Users/Hero/
-uploadPath: /root/data/
+uploadPath: /root/data/img/
