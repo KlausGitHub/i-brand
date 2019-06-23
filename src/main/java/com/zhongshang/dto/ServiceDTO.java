@@ -20,6 +20,14 @@ public class ServiceDTO {
      */
     private String name;
 
+
+    /**
+     * 类型：1：服务，2：商标知识，3：商标问问，4,：专利新闻，5：公司动态，6：关于我们，7：服务
+     *
+     * @mbggenerated
+     */
+    private Integer type;
+
     /**
      * 价格
      *
