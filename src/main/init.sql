@@ -115,3 +115,6 @@ CREATE TABLE `t_config` (
 `modifier` varchar(64)  DEFAULT NULL COMMENT '修改人',
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='配置表';
+
+alter table t_service add type tinyint(4) not Null
+	COMMENT '类型：1：服务，2：商标知识，3：商标问问，4,：专利新闻，5：公司动态，6：关于我们，7：服务'  AFTER `name`;
