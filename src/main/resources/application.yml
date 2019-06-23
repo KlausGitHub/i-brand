@@ -22,10 +22,10 @@ spring:
   datasource:
     type: "com.alibaba.druid.pool.DruidDataSource"
 #    url: jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF8
-    url: jdbc:mysql://localhost:3306/brand?useUnicode=true&amp;characterEncoding=UTF8
+    url: jdbc:mysql://localhost:3306/ibrand?useUnicode=true&amp;characterEncoding=UTF8
     username: root
 #    password: "root"
-    password: "4eSFp&9x$kd:1s~@"
+    password:
     driver-class-name: "com.mysql.jdbc.Driver"
     # 初始化大小，最小，最大
     initialSize: 5
