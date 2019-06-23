@@ -170,7 +170,6 @@ public class CustomerController {
         try {
             log.info("重置密码请求开始,请求参数={}", JSON.toJSONString(req));
             Preconditions.checkNotNull(req.getCustomerId(), "客户id不能为空");
-            Preconditions.checkNotNull(req.getOldPwd(), "原始密码不能为空");
             Preconditions.checkNotNull(req.getNewPwd(), "新密码不能为空");
             CustomerDTO cDto = customerService.get(req.getCustomerId());
             if (cDto == null) {
@@ -179,6 +178,7 @@ public class CustomerController {
             }
             //修改密码时候校验旧密码
             if (req.getType() == BrandConstant.CHANGE_PWD) {
+                Preconditions.checkNotNull(req.getOldPwd(), "原始密码不能为空");
                 String oldPwd = req.getOldPwd() + BrandConstant.PWD_KEY;
                 if (!cDto.getPassword().equals(DigestUtils.md5DigestAsHex(oldPwd.getBytes()))) {
                     return ResultUtils.fail(ErrorCode.CHANGE_OLD_PASSWORD_ERROR, false);
