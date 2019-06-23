@@ -156,7 +156,7 @@ public class CustomerController {
         if (dbCustomer != null) {
             return ResultUtils.success(true);
         }
-        return ResultUtils.fail(ErrorCode.EMAIL_NOT_EXISTS, false);
+        return ResultUtils.fail(ErrorCode.CUSTOMER_NOT_EXISTS, false);
     }
 
     /**
