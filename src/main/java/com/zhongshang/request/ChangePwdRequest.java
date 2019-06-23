@@ -20,4 +20,6 @@ public class ChangePwdRequest implements Serializable {
 
     private String newPwd;
 
+    private Integer type;//1修改密码 2忘记密码
+
 }
