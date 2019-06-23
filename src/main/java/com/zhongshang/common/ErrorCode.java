@@ -49,7 +49,7 @@ public enum ErrorCode {
     UPDATE_CUSTOMER_ERROR("30007", "更新失败"),
     CHANGE_OLD_PASSWORD_ERROR("30008", "原始密码不对"),
     CHANGE_PASSWORD_ERROR("30009", "密码修改失败"),
-    EMAIL_NOT_EXISTS("30010", "邮箱不存在"),
+    CUSTOMER_NOT_EXISTS("30010", "账号不存在"),
 
     APPLY_ERROR("50001","服务申请失败"),
     APPLY_NOT_EXIST("50002","服务申请不存在"),

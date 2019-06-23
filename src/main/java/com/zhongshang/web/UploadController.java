@@ -5,11 +5,10 @@ import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -23,6 +22,13 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/v1/upload/")
 public class UploadController {
+
+    private final ResourceLoader resourceLoader;
+
+    @Autowired
+    public UploadController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     @Value("${uploadPath}")
     private String uploadPath;
@@ -52,5 +58,10 @@ public class UploadController {
             log.error("file upload failed,caused by = {}", e);
             return ResultUtils.fail(ErrorCode.COMMON_UPLOAD_ERR, null);
         }
+    }
+
+    @RequestMapping(value = "show", method = RequestMethod.GET)
+    public BaseResult show(@RequestParam("name") String name) {
+        return ResultUtils.success(resourceLoader.getResource(name));
     }
 }
