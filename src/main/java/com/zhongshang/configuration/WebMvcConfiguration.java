@@ -30,6 +30,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         excludeList.add("/v1/brand/**");
         excludeList.add("/v1/patent/**");
         excludeList.add("/v1/upload/**");
+        excludeList.add("/v1/apply/**");
+        excludeList.add("/v1/config/**");
+        excludeList.add("/v1/pubOrCollect/**");
+        excludeList.add("/v1/service/**");
 
         registry.addInterceptor(loginInterceptor).addPathPatterns("/**")
                 .excludePathPatterns(excludeList);
