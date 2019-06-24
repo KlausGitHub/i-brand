@@ -13,6 +13,10 @@ public class ServiceDTO {
 
     private Long id;
 
+    private int pageSize;   //每页条数
+
+    private int pageNum;    //页数
+
     /**
      * 名称
      *

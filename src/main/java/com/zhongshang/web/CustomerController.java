@@ -206,8 +206,8 @@ public class CustomerController {
         try {
             CustomerDTO cDto = new CustomerDTO();
             BeanUtils.copyProperties(req, cDto);
-            int pageNum = req.getInteger("pageNum");
-            int pageSize = req.getInteger("pageSize");
+            int pageNum = req.get("pageNum") == null ? 1 :req.getInteger("pageNum");
+            int pageSize = req.get("pageSize") == null ? 10 : req.getInteger("pageSize");
             Page page = PageHelper.startPage(pageNum > 0 ? pageNum : 1, pageSize > 0 ? pageSize : 10, true);
             List<CustomerDTO> list = customerService.list(cDto);
             json.put("pageNum", pageNum);
@@ -229,5 +229,17 @@ public class CustomerController {
             return "密码不能为空";
         }
         return null;
+    }
+
+    @RequestMapping(value = "getById", method = RequestMethod.GET)
+    public BaseResult<CustomerDTO> getById(HttpServletRequest req) {
+        try {
+            log.info("根据ID查询用户请求开始，参数={}", req.getParameter("id"));
+            CustomerDTO customerDTO = customerService.get(Long.parseLong(req.getParameter("id")));
+            return ResultUtils.success(customerDTO);
+        } catch (Exception e) {
+            log.error("getById customer error, caused by ={}", e);
+            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
+        }
     }
 }

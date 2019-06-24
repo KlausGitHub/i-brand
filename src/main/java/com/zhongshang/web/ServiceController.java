@@ -1,6 +1,8 @@
 package com.zhongshang.web;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.zhongshang.common.BaseResult;
 import com.zhongshang.common.ErrorCode;
 import com.zhongshang.common.ResultUtils;
@@ -109,14 +111,21 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "getList", method = RequestMethod.POST)
-    public BaseResult<List<ServiceDTO>> getList(@RequestBody JSONObject paramJson) {
+    public BaseResult<JSONObject> getList(@RequestBody JSONObject paramJson) {
         try {
             log.info("批量查询服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
             BeanUtils.copyProperties(serviceDTO, paramJson);
+            Integer pageNum = serviceDTO.getPageNum() != 0 ? serviceDTO.getPageNum() : 1 ;
+            Integer pageSize = serviceDTO.getPageSize() != 0 ? serviceDTO.getPageSize() : 10 ;
+            Page page = PageHelper.startPage(pageNum, pageSize, true);
             List<ServiceDTO> list = serviceService.list(serviceDTO);
-
-            return ResultUtils.success(list);
+            JSONObject json = new JSONObject();
+            json.put("pageNum",pageNum);
+            json.put("pageSize",pageSize);
+            json.put("total",page.getTotal());
+            json.put("result",list);
+            return ResultUtils.success(json);
         } catch (Exception e) {
             log.error("getList error, caused by ={}", e);
             return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
