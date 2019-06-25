@@ -46,15 +46,15 @@ public class UploadController {
         if (!imageFile.exists()) {
             imageFile.mkdirs();
         }
-        imageFile = new File(uploadPath + System.currentTimeMillis() + fileName.substring(fileName.lastIndexOf(".")));
+        String name = System.currentTimeMillis() + fileName.substring(fileName.lastIndexOf("."));
+        imageFile = new File(uploadPath + name);
         if (imageFile.exists()) {
             return ResultUtils.fail(ErrorCode.COMMON_UPLOAD_ERR, "该文件已存在，请重试！");
         }
         try {
             file.transferTo(imageFile);
             log.info("上传成功");
-//            return ResultUtils.success(imageFile.getPath());
-            String path = "/img/" + fileName;
+            String path = "/img/" + name;
             return ResultUtils.success(path);
         } catch (IOException e) {
             log.error("file upload failed,caused by = {}", e);
@@ -62,8 +62,4 @@ public class UploadController {
         }
     }
 
-    @RequestMapping(value = "show", method = RequestMethod.GET)
-    public BaseResult show(@RequestParam("name") String name) {
-        return ResultUtils.success(resourceLoader.getResource(name));
-    }
 }
