@@ -53,7 +53,9 @@ public class UploadController {
         try {
             file.transferTo(imageFile);
             log.info("上传成功");
-            return ResultUtils.success(imageFile.getPath());
+//            return ResultUtils.success(imageFile.getPath());
+            String path = "/img/" + fileName;
+            return ResultUtils.success(path);
         } catch (IOException e) {
             log.error("file upload failed,caused by = {}", e);
             return ResultUtils.fail(ErrorCode.COMMON_UPLOAD_ERR, null);
