@@ -22,6 +22,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> excludeList = Lists.newArrayList();
+        excludeList.add("/img/**");
+
         excludeList.add("/v1/customer/register");
         excludeList.add("/v1/customer/login");
         excludeList.add("/v1/customer/activate");
