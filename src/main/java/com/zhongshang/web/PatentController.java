@@ -56,7 +56,7 @@ public class PatentController {
             return ResultUtils.success(patentDTO);
         } catch (Exception e) {
             log.error("create error, caused by ={}", e);
-            return ResultUtils.fail(ErrorCode.COMMON_CREATE_ERR, null);
+            return ResultUtils.fail(ErrorCode.COMMON_CREATE_ERR, null, "系统异常");
         }
     }
 
@@ -77,7 +77,7 @@ public class PatentController {
 
         } catch (Exception e) {
             log.error("update error, caused by ={}", e);
-            return ResultUtils.fail(ErrorCode.COMMON_UPDATE_ERR, null);
+            return ResultUtils.fail(ErrorCode.COMMON_UPDATE_ERR, null,"系统异常!");
         }
     }
 
@@ -105,7 +105,7 @@ public class PatentController {
             return ResultUtils.success(true);
         }catch(Exception e){
             log.error("delete error, caused by ={}", e);
-            return ResultUtils.fail(ErrorCode.COMMON_DELETE_ERR, false);
+            return ResultUtils.fail(ErrorCode.COMMON_DELETE_ERR, false,"系统异常!");
         }
     }
 
@@ -125,7 +125,7 @@ public class PatentController {
             return ResultUtils.success(patentDTO);
         }catch(Exception e){
             log.error("getById brand error, caused by ={}", e);
-            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
+            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null,"系统异常!");
         }
     }
 
@@ -179,7 +179,7 @@ public class PatentController {
             return ResultUtils.success(json);
         }catch(Exception e){
             log.error("getList error, caused by ={}", e);
-            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null);
+            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null,"系统异常!");
         }
     }
 
