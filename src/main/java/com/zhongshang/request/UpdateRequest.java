@@ -21,4 +21,6 @@ public class UpdateRequest implements Serializable {
     private String loginName;
 
     private String headLogo;
+
+    private String name;
 }
