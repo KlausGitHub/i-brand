@@ -12,6 +12,8 @@ import com.zhongshang.service.IBrandService;
 import com.zhongshang.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,7 @@ public class BrandController {
     public BaseResult<BrandDTO> create(@RequestBody JSONObject paramJson){
         try {
             log.info("创建商标请求开始，参数={}", paramJson.toJSONString());
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BrandDTO brandDTO = new BrandDTO();
             BeanUtils.copyProperties(brandDTO,paramJson);
             brandDTO.setShowFlag("N");
@@ -54,7 +57,6 @@ public class BrandController {
             }else{
                 brandDTO.setVipFlag("N");
             }
-
             long brandId = brandService.create(brandDTO);
             brandDTO.setId(brandId);
             return ResultUtils.success(brandDTO);
