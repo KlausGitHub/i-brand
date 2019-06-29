@@ -13,6 +13,8 @@ import com.zhongshang.service.IApplyService;
 import com.zhongshang.service.ICustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,6 +46,7 @@ public class ApplyController {
         log.info("申请购买商标、专利、服务、会员请求开始,请求参数={}", JSON.toJSONString(request));
         try {
             ApplyDTO appDto = new ApplyDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(appDto, request);
             appDto.setIsDeleted(YesOrNoEnum.NO.getCode());
             appDto.setCreateTime(new Date());
@@ -68,6 +71,7 @@ public class ApplyController {
         log.info("修改申请信息请求开始,请求参数={}", JSON.toJSONString(req));
         try {
             ApplyDTO appDto = new ApplyDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(appDto, req);
             applyService.update(appDto);
             return ResultUtils.success(applyService.get(appDto.getId()));
@@ -88,6 +92,7 @@ public class ApplyController {
         log.info("删除申请信息请求开始,请求参数={}", JSON.toJSONString(req));
         try {
             ApplyDTO appDto = new ApplyDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(req, appDto);
             appDto.setIsDeleted(YesOrNoEnum.YES.getCode());
             int cnt = applyService.update(appDto);
@@ -110,6 +115,7 @@ public class ApplyController {
         JSONObject json = new JSONObject();
         try {
             ApplyDTO appDto = new ApplyDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(appDto, req);
             int pageNum = req.getInteger("pageNum");
             int pageSize = req.getInteger("pageSize");

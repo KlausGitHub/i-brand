@@ -8,6 +8,8 @@ import com.zhongshang.dto.ConfigDTO;
 import com.zhongshang.service.IConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +37,7 @@ public class ConfigController {
         try {
             log.info("创建配置请求开始，参数={}", paramJson.toJSONString());
             ConfigDTO configDTO = new ConfigDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(configDTO,paramJson);
             configDTO.setIsDeleted("N");
             configDTO.setCreateTime(new Date());
@@ -55,6 +58,7 @@ public class ConfigController {
         try {
             log.info("修改配置请求开始，参数={}", paramJson.toJSONString());
             ConfigDTO configDTO = new ConfigDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(configDTO,paramJson);
             //CustomerDTO customerDTO = customerService.get(configDTO.getCustomerId());
             configDTO.setModifyTime(new Date());
@@ -76,6 +80,7 @@ public class ConfigController {
         try{
             log.info("删除配置请求开始，参数={}", paramJson.toJSONString());
             ConfigDTO configDTO = new ConfigDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(configDTO,paramJson);
             int deleteNum = configService.delete(configDTO.getId());
             if(deleteNum > 0){
@@ -106,6 +111,7 @@ public class ConfigController {
         try{
             log.info("批量查询配置请求开始，参数={}", paramJson.toJSONString());
             ConfigDTO configDTO = new ConfigDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(configDTO,paramJson);
             List<ConfigDTO> list = configService.list(configDTO);
 

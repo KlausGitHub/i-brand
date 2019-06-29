@@ -13,6 +13,8 @@ import com.zhongshang.service.IPatentService;
 import com.zhongshang.service.IPubCollectService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,6 +52,7 @@ public class PubCollectController {
         try {
             log.info("发布或者收藏商标、专利请求开始,请求参数={}", JSON.toJSONString(req));
             PubCollectDTO pubDto = new PubCollectDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
             pubDto.setCreateTime(new Date());
             pubDto.setModifyTime(new Date());
@@ -73,6 +76,7 @@ public class PubCollectController {
         try {
             log.info("更新商标、专利的发布请求开始,请求参数={}", JSON.toJSONString(req));
             PubCollectDTO pubDto = new PubCollectDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
             pubDto.setModifyTime(new Date());
             int cnt = pubCollectService.update(pubDto);
@@ -95,6 +99,7 @@ public class PubCollectController {
         try {
             log.info("删除商标、专利的发布请求开始,请求参数={}", JSON.toJSONString(req));
             PubCollectDTO pubDto = new PubCollectDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
             pubDto.setModifyTime(new Date());
             pubDto.setIsDeleted("Y");
@@ -139,6 +144,7 @@ public class PubCollectController {
         try {
             log.info("查询收藏的商标、专利列表请求开始,请求参数={}", JSON.toJSONString(req));
             PubCollectDTO pubDto = new PubCollectDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
             int pageNum = req.getInteger("pageNum");
             int pageSize = req.getInteger("pageSize");

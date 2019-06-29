@@ -18,6 +18,8 @@ import com.zhongshang.response.LoginResponse;
 import com.zhongshang.service.ICustomerService;
 import com.zhongshang.utils.RegexUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -205,6 +208,7 @@ public class CustomerController {
         JSONObject json = new JSONObject();
         try {
             CustomerDTO cDto = new CustomerDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(req, cDto);
             int pageNum = req.get("pageNum") == null ? 1 :req.getInteger("pageNum");
             int pageSize = req.get("pageSize") == null ? 10 : req.getInteger("pageSize");

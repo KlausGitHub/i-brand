@@ -12,6 +12,8 @@ import com.zhongshang.service.ICustomerService;
 import com.zhongshang.service.IPatentService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +46,7 @@ public class PatentController {
         try {
             log.info("创建专利请求开始，参数={}", paramJson.toJSONString());
             PatentDTO patentDTO = new PatentDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(patentDTO,paramJson);
             patentDTO.setShowFlag("N");
             patentDTO.setDeleteFlag("N");
@@ -65,6 +68,7 @@ public class PatentController {
         try {
             log.info("修改专利请求开始，参数={}", paramJson.toJSONString());
             PatentDTO patentDTO = new PatentDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(patentDTO,paramJson);
             //CustomerDTO customerDTO = customerService.get(patentDTO.getCustomerId());
             patentDTO.setModifyTime(new Date());
@@ -134,6 +138,7 @@ public class PatentController {
         try{
             log.info("批量查询专利请求开始，参数={}", paramJson.toJSONString());
             PatentDTO patentDTO = new PatentDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(patentDTO,paramJson);
             patentDTO.setDeleteFlag("N");
 

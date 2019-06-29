@@ -71,6 +71,7 @@ public class BrandController {
         try {
             log.info("修改商标请求开始，参数={}", paramJson.toJSONString());
             BrandDTO brandDTO = new BrandDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(brandDTO,paramJson);
             CustomerDTO customerDTO = customerService.get(brandDTO.getCustomerId());
             brandDTO.setModifyTime(new Date());
@@ -141,6 +142,7 @@ public class BrandController {
         try{
             log.info("批量查询商标请求开始，参数={}", paramJson.toJSONString());
             BrandDTO brandDTO = new BrandDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(brandDTO,paramJson);
             brandDTO.setDeleteFlag("N");
 

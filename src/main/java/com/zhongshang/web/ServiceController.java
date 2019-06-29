@@ -10,6 +10,8 @@ import com.zhongshang.dto.ServiceDTO;
 import com.zhongshang.service.IServiceService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,7 @@ public class ServiceController {
         try {
             log.info("创建服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(serviceDTO, paramJson);
             serviceDTO.setCreateTime(new Date());
             serviceDTO.setModifyTime(new Date());
@@ -56,6 +59,7 @@ public class ServiceController {
         try {
             log.info("修改服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(serviceDTO, paramJson);
             //CustomerDTO customerDTO = customerService.get(serviceDTO.getCustomerId());
             serviceDTO.setModifyTime(new Date());
@@ -115,6 +119,7 @@ public class ServiceController {
         try {
             log.info("批量查询服务请求开始，参数={}", paramJson.toJSONString());
             ServiceDTO serviceDTO = new ServiceDTO();
+            ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(serviceDTO, paramJson);
             Integer pageNum = serviceDTO.getPageNum() != 0 ? serviceDTO.getPageNum() : 1 ;
             Integer pageSize = serviceDTO.getPageSize() != 0 ? serviceDTO.getPageSize() : 10 ;
