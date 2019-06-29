@@ -211,4 +211,9 @@ public class BrandDTO {
     private String customerName;
     private String customerLoginName;
     private String customerMobile;
+
+    /**
+     * 出售中=0，交易中=1，已售出=2
+     */
+    private Integer status;
 }
