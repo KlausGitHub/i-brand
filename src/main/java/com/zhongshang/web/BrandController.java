@@ -46,6 +46,7 @@ public class BrandController {
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BrandDTO brandDTO = new BrandDTO();
             BeanUtils.copyProperties(brandDTO,paramJson);
+            brandDTO.setStatus(0);
             brandDTO.setShowFlag("N");
             brandDTO.setDeleteFlag("N");
             brandDTO.setCreateTime(new Date());

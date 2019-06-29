@@ -48,6 +48,7 @@ public class PatentController {
             PatentDTO patentDTO = new PatentDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(patentDTO,paramJson);
+            patentDTO.setStatus(0);
             patentDTO.setShowFlag("N");
             patentDTO.setDeleteFlag("N");
             patentDTO.setCreateTime(new Date());
