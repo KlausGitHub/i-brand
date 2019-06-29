@@ -124,6 +124,7 @@ public class CustomerController {
             cDto.setLoginName(req.getLoginName());
             cDto.setMobile(req.getMobile());
             cDto.setHeadLogo(req.getHeadLogo());
+            cDto.setName(req.getName());
             return ResultUtils.success(customerService.update(cDto) > 0);
         } catch (Exception e) {
             log.error("update customer error, caused by = {}", e);
