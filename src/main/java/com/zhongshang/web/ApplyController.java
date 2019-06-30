@@ -141,22 +141,21 @@ public class ApplyController {
      * @return
      */
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
-    private BaseResult<JSONObject> queryById(@PathVariable("id") Long id) {
+    private BaseResult<ApplyDTO> queryById(@PathVariable("id") Long id) {
         log.info("查询服务申请详情信息,id={}", id);
-        JSONObject json = new JSONObject();
         try {
             Preconditions.checkNotNull(id);
             ApplyDTO apply = applyService.get(id);
             if (apply == null) {
-                return ResultUtils.fail(ErrorCode.APPLY_NOT_EXIST, json);
+                return ResultUtils.fail(ErrorCode.APPLY_NOT_EXIST, apply);
             }
-            CustomerDTO customer = customerService.get(apply.getCustomerId());
-            json.put("apply", apply);
-            json.put("customer", customer);
-            return ResultUtils.success(json);
+            //CustomerDTO customer = customerService.get(apply.getCustomerId());
+            //json.put("apply", apply);
+            //json.put("customer", customer);
+            return ResultUtils.success(apply);
         } catch (Exception e) {
             log.error("查询服务申请详情失败", e);
-            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, json, "服务申请");
+            return ResultUtils.fail(ErrorCode.COMMON_QUERY_ERR, null, "服务申请");
         }
     }
 }

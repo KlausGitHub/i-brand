@@ -118,3 +118,9 @@ PRIMARY KEY (`id`)
 
 alter table t_service add type tinyint(4) not Null
 	COMMENT '类型：1：服务，2：商标知识，3：商标问问，4,：专利新闻，5：公司动态，6：关于我们，7：服务'  AFTER `name`;
+
+alter table t_brand add status tinyint(4) DEFAULT NULL
+	COMMENT '0:出售中，1：交易中心，2：已出售'  AFTER `service_price`;
+
+alter table t_patent add status tinyint(4) DEFAULT NULL
+	COMMENT '0:出售中，1：交易中心，2：已出售'  AFTER `service_price`;

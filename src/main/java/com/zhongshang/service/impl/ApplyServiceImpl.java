@@ -5,8 +5,11 @@ import com.google.common.collect.Lists;
 import com.zhongshang.common.YesOrNoEnum;
 import com.zhongshang.dao.ApplyDAO;
 import com.zhongshang.dto.ApplyDTO;
+import com.zhongshang.dto.BrandDTO;
+import com.zhongshang.dto.CustomerDTO;
+import com.zhongshang.dto.PatentDTO;
 import com.zhongshang.model.ApplyDO;
-import com.zhongshang.service.IApplyService;
+import com.zhongshang.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,15 @@ import java.util.List;
 public class ApplyServiceImpl implements IApplyService {
     @Resource
     private ApplyDAO dao;
+
+    @Resource
+    private ICustomerService customerService;
+    @Resource
+    private IBrandService brandService;
+    @Resource
+    private IPatentService patentService;
+    @Resource
+    private IServiceService serviceService;
 
     @Override
     public long create(ApplyDTO dto) {
@@ -56,6 +68,21 @@ public class ApplyServiceImpl implements IApplyService {
             for (ApplyDO app : dataobjects) {
                 ApplyDTO applyDTO = new ApplyDTO();
                 BeanUtils.copyProperties(app, applyDTO);
+                CustomerDTO buyerCustomerDTO = customerService.get(applyDTO.getCustomerId());
+                applyDTO.setBuyerMobile(buyerCustomerDTO != null ? buyerCustomerDTO.getMobile() : null);
+                if(applyDTO.getApplyType() == null){
+                    throw new NullPointerException("订单数据异常，类型为空");
+                }
+                //1-商标2-专利3-服务4-会员
+                if(applyDTO.getApplyType() == 1){
+                    BrandDTO brandDTO = brandService.get(applyDTO.getTargetId());
+                    CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
+                    applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
+                }else if(applyDTO.getApplyType() == 2){
+                    PatentDTO patentDTO = patentService.get(applyDTO.getTargetId());
+                    CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
+                    applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
+                }
                 list.add(applyDTO);
             }
         }
@@ -81,6 +108,22 @@ public class ApplyServiceImpl implements IApplyService {
         }
         ApplyDTO applyDTO = new ApplyDTO();
         BeanUtils.copyProperties(dataobject, applyDTO);
+
+        CustomerDTO buyerCustomerDTO = customerService.get(applyDTO.getCustomerId());
+        applyDTO.setBuyerMobile(buyerCustomerDTO != null ? buyerCustomerDTO.getMobile() : null);
+        if(applyDTO.getApplyType() == null){
+            throw new NullPointerException("订单数据异常，类型为空");
+        }
+        //1-商标2-专利3-服务4-会员
+        if(applyDTO.getApplyType() == 1){
+            BrandDTO brandDTO = brandService.get(applyDTO.getTargetId());
+            CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
+            applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
+        }else if(applyDTO.getApplyType() == 2){
+            PatentDTO patentDTO = patentService.get(applyDTO.getTargetId());
+            CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
+            applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
+        }
         return applyDTO;
     }
 }

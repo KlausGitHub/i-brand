@@ -70,4 +70,14 @@ public class ApplyDTO {
      * 逻辑删除标记Y已删除N未删除
      */
     private String isDeleted;
+
+    /**
+     * 购买方
+     */
+    private String buyerMobile;
+
+    /**
+     * 卖方
+     */
+    private String sallerMobile;
 }
