@@ -49,6 +49,11 @@ public class ApplyDO {
     private BigDecimal amount;
 
     /**
+     * 评分
+     */
+    private Integer score;
+
+    /**
      * 创建时间
      *
      * @mbggenerated

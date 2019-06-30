@@ -47,6 +47,12 @@ public class ApplyDTO {
      */
     private BigDecimal amount;
 
+
+    /**
+     * 评分
+     */
+    private Integer score;
+
     /**
      * 创建时间
      *
