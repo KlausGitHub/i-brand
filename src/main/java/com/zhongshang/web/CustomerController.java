@@ -211,9 +211,10 @@ public class CustomerController {
             CustomerDTO cDto = new CustomerDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(req, cDto);
-            int pageNum = req.get("pageNum") == null ? 1 :req.getInteger("pageNum");
-            int pageSize = req.get("pageSize") == null ? 10 : req.getInteger("pageSize");
-            Page page = PageHelper.startPage(pageNum > 0 ? pageNum : 1, pageSize > 0 ? pageSize : 10, true);
+            Integer pageNum = req.getInteger("pageNum");
+            Integer pageSize = req.getInteger("pageSize");
+            Page page = PageHelper.startPage((pageNum != null && pageNum > 0) ? pageNum : 1,
+                    (pageSize != null && pageSize > 0) ? pageSize : 10, true);
             List<CustomerDTO> list = customerService.list(cDto);
             json.put("pageNum", pageNum);
             json.put("pageSize", pageSize);

@@ -117,9 +117,10 @@ public class ApplyController {
             ApplyDTO appDto = new ApplyDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(appDto, req);
-            int pageNum = req.getInteger("pageNum");
-            int pageSize = req.getInteger("pageSize");
-            Page page = PageHelper.startPage(pageNum > 0 ? pageNum : 1, pageSize > 0 ? pageSize : 10, true);
+            Integer pageNum = req.getInteger("pageNum");
+            Integer pageSize = req.getInteger("pageSize");
+            Page page = PageHelper.startPage((pageNum != null && pageNum > 0) ? pageNum : 1,
+                    (pageSize != null && pageSize > 0) ? pageSize : 10, true);
             List<ApplyDTO> list = applyService.list(appDto);
 
             json.put("pageNum", pageNum);

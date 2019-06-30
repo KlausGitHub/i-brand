@@ -146,9 +146,10 @@ public class PubCollectController {
             PubCollectDTO pubDto = new PubCollectDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
-            int pageNum = req.getInteger("pageNum");
-            int pageSize = req.getInteger("pageSize");
-            Page page = PageHelper.startPage(pageNum > 0 ? pageNum : 1, pageSize > 0 ? pageSize : 10, true);
+            Integer pageNum = req.getInteger("pageNum");
+            Integer pageSize = req.getInteger("pageSize");
+            Page page = PageHelper.startPage((pageNum != null && pageNum > 0) ? pageNum : 1,
+                    (pageSize != null && pageSize > 0) ? pageSize : 10, true);
             List<PubCollectDTO> pubList = pubCollectService.list(pubDto);
             if (pubDto.getActionType() == BrandConstant.COLLECT_TYPE) {
                 JSONObject targetJson = new JSONObject();
