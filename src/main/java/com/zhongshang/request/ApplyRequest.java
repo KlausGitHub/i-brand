@@ -20,4 +20,6 @@ public class ApplyRequest implements Serializable {
     private Long targetId;//目标id 如果是申请会员可以不用传
 
     private BigDecimal amount;
+
+    private Integer score;
 }

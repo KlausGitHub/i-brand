@@ -52,6 +52,7 @@ public class ApplyController {
             appDto.setCreateTime(new Date());
             appDto.setModifyTime(new Date());
             appDto.setStatus(ApplyStatusEnum.APPLY.getCode());
+            appDto.setScore(0);
             Long id = applyService.create(appDto);
             return ResultUtils.success(id > 0);
         } catch (Exception e) {
