@@ -105,7 +105,7 @@ public class ApplyController {
         try {
             ApplyDTO appDto = new ApplyDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
-            BeanUtils.copyProperties(req, appDto);
+            BeanUtils.copyProperties(appDto, req);
             appDto.setIsDeleted(YesOrNoEnum.YES.getCode());
             int cnt = applyService.update(appDto);
             return ResultUtils.success(cnt > 0);
