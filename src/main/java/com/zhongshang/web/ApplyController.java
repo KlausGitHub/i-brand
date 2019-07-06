@@ -5,21 +5,28 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.zhongshang.common.*;
 import com.zhongshang.dto.ApplyDTO;
-import com.zhongshang.dto.CustomerDTO;
+import com.zhongshang.dto.BrandDTO;
+import com.zhongshang.dto.PatentDTO;
 import com.zhongshang.request.ApplyRequest;
 import com.zhongshang.service.IApplyService;
+import com.zhongshang.service.IBrandService;
 import com.zhongshang.service.ICustomerService;
+import com.zhongshang.service.IPatentService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author yangsheng
@@ -32,6 +39,10 @@ public class ApplyController {
 
     @Resource
     private IApplyService applyService;
+    @Resource
+    private IBrandService brandService;
+    @Resource
+    private IPatentService patentService;
     @Resource
     private ICustomerService customerService;
 
@@ -123,7 +134,34 @@ public class ApplyController {
             Page page = PageHelper.startPage((pageNum != null && pageNum > 0) ? pageNum : 1,
                     (pageSize != null && pageSize > 0) ? pageSize : 10, true);
             List<ApplyDTO> list = applyService.list(appDto);
-
+            if (list == null || list.size() <= 0) {
+                list = Lists.newArrayList();
+            }
+            //商标列表
+            if (appDto.getApplyType() == 1) {
+                List<Long> targetIds = list.stream().map(ApplyDTO::getTargetId).collect(Collectors.toList());
+                List<BrandDTO> brands = brandService.listByIds(targetIds);
+                if (CollectionUtils.isNotEmpty(brands)) {
+                    Map<Long, BrandDTO> brandDTOMap = brands.stream().collect(Collectors.toMap(BrandDTO::getId, o -> o));
+                    for (int i = 0; i < list.size(); i++) {
+                        ApplyDTO apply = list.get(i);
+                        BrandDTO ad = brandDTOMap.get(apply.getTargetId());
+                        apply.setTargetJson(JSON.parseObject(JSON.toJSONString(ad)));
+                    }
+                }
+            } else if (appDto.getApplyType() == 2) {
+                //专利
+                List<Long> targetIds = list.stream().map(ApplyDTO::getTargetId).collect(Collectors.toList());
+                List<PatentDTO> patents = patentService.listByIds(targetIds);
+                if (CollectionUtils.isNotEmpty(patents)){
+                    Map<Long, PatentDTO> patentDTOMap = patents.stream().collect(Collectors.toMap(PatentDTO::getId, o -> o));
+                    for (int i = 0; i < list.size(); i++) {
+                        ApplyDTO apply = list.get(i);
+                        PatentDTO pd = patentDTOMap.get(apply.getTargetId());
+                        apply.setTargetJson(JSON.parseObject(JSON.toJSONString(pd)));
+                    }
+                }
+            }
             json.put("pageNum", pageNum);
             json.put("pageSize", pageSize);
             json.put("total", page.getTotal());

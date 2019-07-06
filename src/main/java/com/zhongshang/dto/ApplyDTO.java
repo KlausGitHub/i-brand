@@ -1,5 +1,6 @@
 package com.zhongshang.dto;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -86,4 +87,6 @@ public class ApplyDTO {
      * 卖方
      */
     private String sallerMobile;
+
+    private JSONObject targetJson;
 }
