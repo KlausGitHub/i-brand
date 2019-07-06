@@ -154,6 +154,8 @@ public class BrandController {
                 if(searCustomerList != null && searCustomerList.size()>0){
                     if(searCustomerList.get(0) != null){
                         brandDTO.setCustomerId(searCustomerList.get(0).getId());
+                    }else{
+                        return ResultUtils.success(null);
                     }
                 }
             }
