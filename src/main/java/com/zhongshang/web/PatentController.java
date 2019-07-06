@@ -153,6 +153,8 @@ public class PatentController {
                     }else{
                         return ResultUtils.success(null);
                     }
+                }else{
+                    return ResultUtils.success(null);
                 }
             }
 

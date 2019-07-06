@@ -157,6 +157,8 @@ public class BrandController {
                     }else{
                         return ResultUtils.success(null);
                     }
+                }else{
+                    return ResultUtils.success(null);
                 }
             }
 
