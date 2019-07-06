@@ -1,5 +1,6 @@
 package com.zhongshang.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -65,6 +66,7 @@ public class ServiceDTO {
      *
      * @mbggenerated
      */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /**
@@ -72,6 +74,7 @@ public class ServiceDTO {
      *
      * @mbggenerated
      */
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
 
     private String customerName;
