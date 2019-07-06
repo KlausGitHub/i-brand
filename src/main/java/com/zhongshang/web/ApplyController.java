@@ -129,6 +129,7 @@ public class ApplyController {
             ApplyDTO appDto = new ApplyDTO();
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(appDto, req);
+            appDto.setIsDeleted("N");
             Integer pageNum = req.getInteger("pageNum");
             Integer pageSize = req.getInteger("pageSize");
             Page page = PageHelper.startPage((pageNum != null && pageNum > 0) ? pageNum : 1,
