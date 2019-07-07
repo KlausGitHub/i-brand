@@ -58,9 +58,9 @@ public class ServiceController {
     public BaseResult<ServiceDTO> update(@RequestBody JSONObject paramJson) {
         try {
             log.info("修改服务请求开始，参数={}", paramJson.toJSONString());
-            ServiceDTO serviceDTO = new ServiceDTO();
-            ConvertUtils.register(new DateLocaleConverter(), Date.class);
-            BeanUtils.copyProperties(serviceDTO, paramJson);
+//            ConvertUtils.register(new DateLocaleConverter(), Date.class);
+            //BeanUtils.copyProperties(serviceDTO, paramJson);
+            ServiceDTO serviceDTO = JSONObject.parseObject(paramJson.toJSONString(),ServiceDTO.class);
             //CustomerDTO customerDTO = customerService.get(serviceDTO.getCustomerId());
             serviceDTO.setModifyTime(new Date());
             int updateNum = serviceService.update(serviceDTO);
