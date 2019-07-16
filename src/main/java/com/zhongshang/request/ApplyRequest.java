@@ -22,4 +22,6 @@ public class ApplyRequest implements Serializable {
     private BigDecimal amount;
 
     private Integer score;
+
+    private String description;
 }
