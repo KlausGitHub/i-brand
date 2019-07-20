@@ -95,9 +95,9 @@ public class CustomerController {
             BaseResult<Boolean> result = customerService.activate(code);
             if (result != null && result.success()) {
                 //激活成功
-                response.sendRedirect("https://www.baidu.com");
+                response.sendRedirect("http://www.zsbyvip.com/#/yzcg");
             } else {
-                response.sendRedirect("https://www.baidu.com");
+                response.sendRedirect("http://www.zsbyvip.com/#/yzsb");
             }
             return customerService.activate(code);
         } catch (Exception e) {
