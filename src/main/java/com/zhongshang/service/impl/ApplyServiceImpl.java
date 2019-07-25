@@ -70,15 +70,15 @@ public class ApplyServiceImpl implements IApplyService {
                 BeanUtils.copyProperties(app, applyDTO);
                 CustomerDTO buyerCustomerDTO = customerService.get(applyDTO.getCustomerId());
                 applyDTO.setBuyerMobile(buyerCustomerDTO != null ? buyerCustomerDTO.getMobile() : null);
-                if(applyDTO.getApplyType() == null){
+                if (applyDTO.getApplyType() == null) {
                     throw new NullPointerException("订单数据异常，类型为空");
                 }
                 //1-商标2-专利3-服务4-会员
-                if(applyDTO.getApplyType() == 1){
+                if (applyDTO.getApplyType() == 1 && applyDTO.getTargetId() != null) {
                     BrandDTO brandDTO = brandService.get(applyDTO.getTargetId());
                     CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
                     applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
-                }else if(applyDTO.getApplyType() == 2){
+                } else if (applyDTO.getApplyType() == 2 && applyDTO.getTargetId() != null) {
                     PatentDTO patentDTO = patentService.get(applyDTO.getTargetId());
                     CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
                     applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
@@ -103,7 +103,7 @@ public class ApplyServiceImpl implements IApplyService {
     public ApplyDTO get(long id) {
         Preconditions.checkArgument(id > 0, "id必须大于0");
         ApplyDO dataobject = dao.selectByPrimaryKey(id);
-        if(dataobject == null){
+        if (dataobject == null) {
             return null;
         }
         ApplyDTO applyDTO = new ApplyDTO();
@@ -111,15 +111,15 @@ public class ApplyServiceImpl implements IApplyService {
 
         CustomerDTO buyerCustomerDTO = customerService.get(applyDTO.getCustomerId());
         applyDTO.setBuyerMobile(buyerCustomerDTO != null ? buyerCustomerDTO.getMobile() : null);
-        if(applyDTO.getApplyType() == null){
+        if (applyDTO.getApplyType() == null) {
             throw new NullPointerException("订单数据异常，类型为空");
         }
         //1-商标2-专利3-服务4-会员
-        if(applyDTO.getApplyType() == 1){
+        if (applyDTO.getApplyType() == 1 && applyDTO.getTargetId() != null) {
             BrandDTO brandDTO = brandService.get(applyDTO.getTargetId());
             CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
             applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
-        }else if(applyDTO.getApplyType() == 2){
+        } else if (applyDTO.getApplyType() == 2 && applyDTO.getTargetId() != null) {
             PatentDTO patentDTO = patentService.get(applyDTO.getTargetId());
             CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
             applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
