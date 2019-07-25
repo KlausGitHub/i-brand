@@ -76,12 +76,17 @@ public class ApplyServiceImpl implements IApplyService {
                 //1-商标2-专利3-服务4-会员
                 if (applyDTO.getApplyType() == 1 && applyDTO.getTargetId() != null) {
                     BrandDTO brandDTO = brandService.get(applyDTO.getTargetId());
-                    CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
-                    applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
+                    if(brandDTO != null){
+                        CustomerDTO brandCusDTO = customerService.get(brandDTO.getCustomerId());
+                        applyDTO.setSallerMobile(brandCusDTO != null ? brandCusDTO.getMobile() : null);
+                    }
                 } else if (applyDTO.getApplyType() == 2 && applyDTO.getTargetId() != null) {
                     PatentDTO patentDTO = patentService.get(applyDTO.getTargetId());
-                    CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
-                    applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
+                    if(patentDTO != null){
+                        CustomerDTO patentCusDTO = customerService.get(patentDTO.getCustomerId());
+                        applyDTO.setSallerMobile(patentCusDTO != null ? patentCusDTO.getMobile() : null);
+                    }
+
                 }
                 list.add(applyDTO);
             }
