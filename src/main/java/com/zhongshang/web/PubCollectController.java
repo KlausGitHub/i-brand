@@ -144,6 +144,7 @@ public class PubCollectController {
         try {
             log.info("查询收藏的商标、专利列表请求开始,请求参数={}", JSON.toJSONString(req));
             PubCollectDTO pubDto = new PubCollectDTO();
+            pubDto.setIsDeleted("N");
             ConvertUtils.register(new DateLocaleConverter(), Date.class);
             BeanUtils.copyProperties(pubDto, req);
             Integer pageNum = req.getInteger("pageNum");
