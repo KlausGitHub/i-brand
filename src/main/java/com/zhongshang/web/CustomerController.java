@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +126,9 @@ public class CustomerController {
             cDto.setMobile(req.getMobile());
             cDto.setHeadLogo(req.getHeadLogo());
             cDto.setName(req.getName());
+            BigDecimal bd = new BigDecimal(req.getBalance());
+            cDto.setBalance(bd);
+            cDto.setVipFlag(req.getVipFlag());
             return ResultUtils.success(customerService.update(cDto) > 0);
         } catch (Exception e) {
             log.error("update customer error, caused by = {}", e);
