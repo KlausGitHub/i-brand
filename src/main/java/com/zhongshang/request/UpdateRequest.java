@@ -23,4 +23,9 @@ public class UpdateRequest implements Serializable {
     private String headLogo;
 
     private String name;
+
+    private String balance;
+
+    private String vipFlag;
+
 }
