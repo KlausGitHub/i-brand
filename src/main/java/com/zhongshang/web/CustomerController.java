@@ -126,8 +126,10 @@ public class CustomerController {
             cDto.setMobile(req.getMobile());
             cDto.setHeadLogo(req.getHeadLogo());
             cDto.setName(req.getName());
-            BigDecimal bd = new BigDecimal(req.getBalance());
-            cDto.setBalance(bd);
+            if (req.getBalance() != null){
+                BigDecimal bd = new BigDecimal(req.getBalance());
+                cDto.setBalance(bd);
+            }
             cDto.setVipFlag(req.getVipFlag());
             return ResultUtils.success(customerService.update(cDto) > 0);
         } catch (Exception e) {
