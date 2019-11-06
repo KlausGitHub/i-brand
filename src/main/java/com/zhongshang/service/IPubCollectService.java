@@ -17,4 +17,6 @@ public interface IPubCollectService {
     int count(PubCollectDTO dto);
 
     PubCollectDTO get(long id);
+
+    int updateByTargetId(PubCollectDTO pubDto);
 }
