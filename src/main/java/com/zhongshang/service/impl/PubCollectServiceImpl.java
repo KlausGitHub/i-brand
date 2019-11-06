@@ -79,4 +79,13 @@ public class PubCollectServiceImpl implements IPubCollectService {
         BeanUtils.copyProperties(dataobject, pubCollectDTO);
         return pubCollectDTO;
     }
+
+    @Override
+    public int updateByTargetId(PubCollectDTO pubDto) {
+        Preconditions.checkArgument(pubDto != null ,"对象不能为空.");
+        PubCollectDO dataobject = new PubCollectDO();
+        BeanUtils.copyProperties(pubDto, dataobject);
+        int cnt = dao.updateByTargetId(dataobject);
+        return cnt;
+    }
 }

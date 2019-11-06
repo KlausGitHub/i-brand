@@ -103,7 +103,12 @@ public class PubCollectController {
             BeanUtils.copyProperties(pubDto, req);
             pubDto.setModifyTime(new Date());
             pubDto.setIsDeleted("Y");
-            int cnt = pubCollectService.update(pubDto);
+            int cnt;
+            if (pubDto.getActionType() != null && pubDto.getActionType() == BrandConstant.COLLECT_TYPE){
+                cnt = pubCollectService.updateByTargetId(pubDto);
+            }else{
+                cnt = pubCollectService.update(pubDto);
+            }
             return ResultUtils.success(cnt > 0);
         } catch (Exception e) {
             log.error("删除发布或者收藏商标、专利失败", e);

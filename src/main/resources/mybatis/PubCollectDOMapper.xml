@@ -274,4 +274,11 @@
         select count(*) from t_pub_collect
         <include refid="BASE_COND_LIST"/>
     </select>
+
+    <update id="updateByTargetId" parameterType="com.zhongshang.model.PubCollectDO">
+        update t_pub_collect
+        set is_deleted = 'Y'
+        where target_id = #{targetId,jdbcType=BIGINT}
+        and content_type = 2
+    </update>
 </mapper>

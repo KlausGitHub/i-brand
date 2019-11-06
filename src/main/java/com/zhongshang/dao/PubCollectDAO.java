@@ -19,4 +19,6 @@ public interface PubCollectDAO {
     List<PubCollectDO> selectByCond(PubCollectDO cond);
 
     int countByCond(PubCollectDO cond);
+
+    int updateByTargetId(PubCollectDO dataobject);
 }
