@@ -280,5 +280,6 @@
         set is_deleted = 'Y'
         where target_id = #{targetId,jdbcType=BIGINT}
         and content_type = 2
+        and customer_id = #{customerId,jdbcType=BIGINT}
     </update>
 </mapper>
