@@ -31,7 +31,7 @@ create table t_brand(
 	banner_url varchar(256) COMMENT '头图',
 	first_notice_no varchar(20) COMMENT '初审公告期号',
 	first_notice_time DATETIME COMMENT '初审公告日期',
-	apply_range varchar(20) COMMENT '适用范围',
+	apply_range varchar(100) COMMENT '适用范围',
 	register_notice_no varchar(20) COMMENT '注册公告期号',
 	register_notice_time DATETIME COMMENT '注册公告日期',
 	inland_flag char(1) COMMENT 'Y:国内商标 N:国外商标',
